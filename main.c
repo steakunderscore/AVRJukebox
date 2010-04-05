@@ -21,10 +21,13 @@
 /* Global variables */
 #define SPEED 		(MCKKHz/20)
 unsigned int LedSpeed = SPEED *50 ;
+const int display_mask[4]= {DSTATE0, DSTATE1, DSTATE2, DSTATE3};
+unsigned int currentSegment = 0;
 
 //Function Prototypes
 static void change_speed ( void );
 static void wait ( void );
+static void scrollDisplay ( void );
 
 
 //*--------------------------------------------------------------------------------------
@@ -58,6 +61,25 @@ static void wait ( void )
     for(waiting_time = 0; waiting_time < LedSpeed; waiting_time++) ;
 }//* End
 
+
+//*--------------------------------------------------------------------------------------
+//* Function Name       : scrollDisplay
+//* Object              : set the current display segment to the next segment
+//* Input Parameters    : none. But does use global currentSegment.
+//* Output Parameters   : none
+//*--------------------------------------------------------------------------------------
+static void scrollDisplay( void ) {
+    if (currentSegment >= 3) {
+        AT91F_PIO_SetOutput( AT91C_BASE_PIOA, DISPLAY_MASK) ;
+        AT91F_PIO_ClearOutput( AT91C_BASE_PIOA, display_mask[0] );
+        currentSegment = 0;
+    } else {
+        AT91F_PIO_SetOutput( AT91C_BASE_PIOA, display_mask[currentSegment++]);
+        AT91F_PIO_ClearOutput( AT91C_BASE_PIOA, display_mask[currentSegment]);
+    }
+}
+
+
 //*--------------------------------------------------------------------------------------
 //* Function Name       : Main
 //* Object              : Software entry point
@@ -66,4 +88,11 @@ static void wait ( void )
 //*--------------------------------------------------------------------------------------
 int main(void)
 {//* Begin
+       AT91F_PIO_CfgOutput( AT91C_BASE_PIOA, DISPLAY_MASK ) ;
+       AT91F_PIO_SetOutput( AT91C_BASE_PIOA, DISPLAY_MASK) ;
+
+       for(;;) {
+           scrollDisplay();
+       }
 }//* End of main
+
