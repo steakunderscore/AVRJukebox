@@ -1,14 +1,18 @@
-// Author::    Wim Looman  (mailto:ghostunderscore@gmail.com)
-// Copyright:: Copyright (c) 2010 Wim Looman
-// License::   GNU General Public License (see LICENSE in root folder)
+/*
+ * Authors:
+ *      Wim Looman
+ *      Henry Jenkins
+ * Copyright:
+ *      Copyright (c) 2010 Wim Looman, Henry Jenkins
+ * License:
+ *      GNU General Public License (see LICENSE in root folder)
+ */
 
 // Include Standard files
 #include "Board.h"
 
 
-/*------------------------*
- * Keypad Pin Definitions *
- *------------------------*/
+// Keypad Pin Definitions
 #define K_ROW_0     (1<<7)   // PA7
 #define K_ROW_1     (1<<8)   // PA8
 #define K_ROW_2     (1<<9)   // PA9
@@ -23,22 +27,17 @@
 #define KEYPAD_MASK (K_ROWS | K_COLUMNS)
 
 int keypadButtons[4][4] = {{ 1 ,  2 ,  3 , 'A'},
-                     { 4 ,  5 ,  6 , 'B'},
-                     { 7 ,  8 ,  9 , 'C'},
-                     {'*',  0 , '#', 'D'}}
+                           { 4 ,  5 ,  6 , 'B'},
+                           { 7 ,  8 ,  9 , 'C'},
+                           {'*',  0 , '#', 'D'}}
 
-//*--------------------------------------------------------------------------------------
-//* Function Name       : init
-//* Object              : Initialize the 
-//* Input Parameters    : none. Waiting time is defined by the global variable LedSpeed.
-//* Output Parameters   : none
-//*--------------------------------------------------------------------------------------
+/* Initializes the keypad ready for use.
+ */
 void keypadInit( void );
 
-//*--------------------------------------------------------------------------------------
-//* Function Name       : wait
-//* Object              : Software waiting loop
-//* Input Parameters    : none. Waiting time is defined by the global variable LedSpeed.
-//* Output Parameters   : none
-//*--------------------------------------------------------------------------------------
+/* Gets the currently pressed keypad buttons.
+ * 
+ * Returns: 
+ *  A 4x4 array of 1's on the pressed buttons and 0's on the unpressed buttons.
+ */
 int** getInputs( void );
