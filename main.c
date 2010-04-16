@@ -17,12 +17,8 @@
 /* Global variables */
 #define SPEED (MCKKHz/20)
 
-//*--------------------------------------------------------------------------------------
-//* Function Name       : Main
-//* Object              : Software entry point
-//* Input Parameters    : none.
-//* Output Parameters   : none.
-//*--------------------------------------------------------------------------------------
+/* Software entry point
+ */
 int main(void)
 {
     displayInit();
