@@ -17,6 +17,7 @@
 
 // Include Standard files
 #include "Board.h"
+#include "input.h"
 
 /* Global variables */
 #define SPEED 		(MCKKHz/20)
@@ -90,7 +91,9 @@ int main(void)
 {//* Begin
        AT91F_PIO_CfgOutput( AT91C_BASE_PIOA, DISPLAY_MASK ) ;
        AT91F_PIO_SetOutput( AT91C_BASE_PIOA, DISPLAY_MASK) ;
-
+        
+        keypadInit();
+        
        for(;;) {
            scrollDisplay();
        }
