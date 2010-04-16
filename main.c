@@ -24,13 +24,10 @@
 /* Global variables */
 #define SPEED 		(MCKKHz/20)
 unsigned int LedSpeed = SPEED *50 ;
-const int display_mask[4]= {DSTATE0, DSTATE1, DSTATE2, DSTATE3};
-unsigned int currentSegment = 0;
 
 //Function Prototypes
 static void change_speed ( void );
 static void wait ( void );
-static void scrollDisplay ( void );
 
 
 //*--------------------------------------------------------------------------------------
@@ -73,8 +70,6 @@ static void wait ( void )
 //*--------------------------------------------------------------------------------------
 int main(void)
 {//* Begin
-       AT91F_PIO_CfgOutput( AT91C_BASE_PIOA, DISPLAY_MASK ) ;
-       AT91F_PIO_SetOutput( AT91C_BASE_PIOA, DISPLAY_MASK) ;
 
        for(;;) {
            scrollDisplay();

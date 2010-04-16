@@ -21,6 +21,13 @@
 #define DISPLAY_SEGMENT_MASK  (DSEGMENTA | DSEGMENTB | DSEGMENTC | DSEGMENTD | \
                                DSEGMENTE | DSEGMENTF | DSEGMENTG | DSEGMENTDP )
 
+//*--------------------------------------------------------------------------------------
+//* Function Name       : dispalyInit
+//* Object              : Initilise the dispaly IO ports.
+//* Input Parameters    : none
+//* Output Parameters   : none
+//*--------------------------------------------------------------------------------------
+void dispalyInit( void );
 
 //*--------------------------------------------------------------------------------------
 //* Function Name       : scrollDisplay
@@ -28,4 +35,14 @@
 //* Input Parameters    : none. But does use global currentSegment.
 //* Output Parameters   : none
 //*--------------------------------------------------------------------------------------
-static void scrollDisplay( void );
+void scrollDisplay( void );
+
+
+//*--------------------------------------------------------------------------------------
+//* Function Name       : setDisplay
+//* Object              : set the givenDisplay to display the value that is passed in
+//* Input Parameters    : displayNum, the value from 0 to 3.
+//                      : value, the value to be displayed.
+//* Output Parameters   : none
+//*--------------------------------------------------------------------------------------
+void setDisplay(int displayNum, int value);
