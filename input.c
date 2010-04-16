@@ -1,6 +1,12 @@
-// Author::    Wim Looman  (mailto:ghostunderscore@gmail.com)
-// Copyright:: Copyright (c) 2010 Wim Looman
-// License::   GNU General Public License (see LICENSE in root folder)
+/*
+ * Authors:
+ *      Wim Looman
+ *      Henry Jenkins
+ * Copyright:
+ *      Copyright (c) 2010 Wim Looman, Henry Jenkins
+ * License:
+ *      GNU General Public License (see LICENSE in root folder)
+ */
 
 #define clear(x) AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, x)
 #define set(x) AT91F_PIO_SetOutput(AT91C_BASE_PIOA, x)
