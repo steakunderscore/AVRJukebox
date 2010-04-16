@@ -14,17 +14,18 @@
 #include "input.h"
 #include "sound.h"
 
-/* Global variables */
-#define SPEED (MCKKHz/20)
-
 /* Software entry point
  */
 int main(void)
 {
     displayInit();
     keypadInit();
+    //soundInit();
 
     for(;;) {
+        //int** inputs = getInputs();
+        //processInputs(inputs);
+        //...sound stuff
         scrollDisplay();
     }
 }
