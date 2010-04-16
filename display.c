@@ -2,11 +2,10 @@
 
 const int display_mask[4]= {DSTATE0, DSTATE1, DSTATE2, DSTATE3};
 unsigned int currentSegment;
-static int display[4]
+static int display[] = {10, 10, 10, 10};
 
-void dispalyInit() {
+void displayInit() {
     currentSegment = 0;
-    display[] = {NULL, NULL, NULL, NULL}
     AT91F_PIO_CfgOutput( AT91C_BASE_PIOA, DISPLAY_MASK ) ;
     AT91F_PIO_SetOutput( AT91C_BASE_PIOA, DISPLAY_MASK) ;
 }

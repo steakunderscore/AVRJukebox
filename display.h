@@ -1,3 +1,4 @@
+#include "Board.h"
 
 /*--------------------*/
 /* Display Definition */
@@ -27,7 +28,7 @@
 //* Input Parameters    : none
 //* Output Parameters   : none
 //*--------------------------------------------------------------------------------------
-void dispalyInit( void );
+void displayInit( void );
 
 //*--------------------------------------------------------------------------------------
 //* Function Name       : scrollDisplay
