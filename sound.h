@@ -8,3 +8,8 @@
  *      GNU General Public License (see LICENSE in root folder)
  */
 
+//TODO: add defines for DAC io
+
+/* Initilizes the DAC and it's output
+ */
+void soundInit( void );

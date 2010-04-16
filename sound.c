@@ -9,3 +9,7 @@
  */
 
 #include "sound.h"
+
+void soundInit( void ) {
+    //TODO: initilize the output for the DAC
+}

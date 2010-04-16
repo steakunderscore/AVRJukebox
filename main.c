@@ -27,6 +27,7 @@ int main(void)
 {
     displayInit();
     keypadInit();
+    soundInit();
 
     for(;;) {
         scrollDisplay();
