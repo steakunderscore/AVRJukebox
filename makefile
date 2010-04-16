@@ -61,7 +61,7 @@ UDEFS =
 UADEFS = 
 
 # List additional C source files here
-SRC  = $(PROJECT).c Cstartup_SAM7.c
+SRC  = $(PROJECT).c Cstartup_SAM7.c input.c display.c sound.c
 
 # List ASM source files here
 ASRC = Cstartup.S

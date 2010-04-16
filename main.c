@@ -71,6 +71,8 @@ static void wait ( void )
 int main(void)
 {//* Begin
 
+        keypadInit();
+
        for(;;) {
            scrollDisplay();
        }
