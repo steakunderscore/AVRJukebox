@@ -17,7 +17,9 @@
 
 // Include Standard files
 #include "Board.h"
+#include "display.h"
 #include "input.h"
+#include "sound.h"
 
 /* Global variables */
 #define SPEED 		(MCKKHz/20)
@@ -61,24 +63,6 @@ static void wait ( void )
     change_speed () ;
     for(waiting_time = 0; waiting_time < LedSpeed; waiting_time++) ;
 }//* End
-
-
-//*--------------------------------------------------------------------------------------
-//* Function Name       : scrollDisplay
-//* Object              : set the current display segment to the next segment
-//* Input Parameters    : none. But does use global currentSegment.
-//* Output Parameters   : none
-//*--------------------------------------------------------------------------------------
-static void scrollDisplay( void ) {
-    if (currentSegment >= 3) {
-        AT91F_PIO_SetOutput( AT91C_BASE_PIOA, DISPLAY_MASK) ;
-        AT91F_PIO_ClearOutput( AT91C_BASE_PIOA, display_mask[0] );
-        currentSegment = 0;
-    } else {
-        AT91F_PIO_SetOutput( AT91C_BASE_PIOA, display_mask[currentSegment++]);
-        AT91F_PIO_ClearOutput( AT91C_BASE_PIOA, display_mask[currentSegment]);
-    }
-}
 
 
 //*--------------------------------------------------------------------------------------
