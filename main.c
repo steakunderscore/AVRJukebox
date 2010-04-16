@@ -14,15 +14,8 @@
 #include "input.h"
 #include "sound.h"
 
-/* Global variables */
-#define SPEED (MCKKHz/20)
-
-//*--------------------------------------------------------------------------------------
-//* Function Name       : Main
-//* Object              : Software entry point
-//* Input Parameters    : none.
-//* Output Parameters   : none.
-//*--------------------------------------------------------------------------------------
+/* Software entry point
+ */
 int main(void)
 {
     displayInit();
@@ -30,6 +23,9 @@ int main(void)
     soundInit();
 
     for(;;) {
+        //int** inputs = getInputs();
+        //processInputs(inputs);
+        //...sound stuff
         scrollDisplay();
     }
 }
