@@ -9,6 +9,7 @@
  */
 
 #include "Board.h"
+#include <stdint.h>
 
 /*--------------------*/
 /* Display Definition */
