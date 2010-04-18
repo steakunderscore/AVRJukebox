@@ -13,6 +13,8 @@
 const int display_mask[4]= {DSTATE0, DSTATE1, DSTATE2, DSTATE3};
 static uint8_t currentSegment = 0;
 static uint8_t display[] = {0, 0, 0, 0};
+const uint8_t states[] = { 0x03, 0x60, 0x6D, 0x79, 0x66,
+                           0xB6, 0xB6, 0xE0, 0xFC, 0xE4 };
 
 void displayInit() {
     AT91F_PIO_CfgOutput( AT91C_BASE_PIOA, DISPLAY_MASK ) ;
@@ -62,54 +64,11 @@ void scrollDisplay( void ) {
 }
 
 void setDisplay(int displayNum, int value) {
-    //TODO
-    /* This is coded assuming the bit pattern for the outputs is:
-     *           a b c d e f g dp NA
-     *           0 1 2 3 4 5 6 7  8
-     */
-    switch (value) {
-        case 0:
-        display[displayNum] = 0x03;
-        break;
-
-        case 1:
-        display[displayNum] = 0x60;
-        break;
-
-        case 2:
-        display[displayNum] = 0x6D;
-        break;
-
-        case 3:
-        display[displayNum] = 0x79;
-        break;
-
-        case 4:
-        display[displayNum] = 0x66;
-        break;
-
-        case 5:
-        display[displayNum] = 0xB6;
-        break;
-
-        case 6:
-        display[displayNum] = 0xB6;
-        break;
-
-        case 7:
-        display[displayNum] = 0xE0;
-        break;
-
-        case 8:
-        display[displayNum] = 0xFC;
-        break;
-
-        case 9:
-        display[displayNum] = 0xE4;
-        break;
-
-        default:
+    if (value > 9) {
+        /* If the value if out of range, turn the display off */
         display[displayNum] = 0x00;
-        break;
+    }
+    else {
+        display[displayNum] = states[value-1];
     }
 }
