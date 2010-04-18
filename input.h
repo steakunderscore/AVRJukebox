@@ -8,6 +8,8 @@
  *      GNU General Public License (see LICENSE in root folder)
  */
 
+#ifndef input_h
+#define input_h
 // Include Standard files
 #include "Board.h"
 
@@ -26,11 +28,6 @@
 #define K_COLUMNS   (K_COLUMN_0 | K_COLUMN_1 | K_COLUMN_2 | K_COLUMN_3)
 #define KEYPAD_MASK (K_ROWS | K_COLUMNS)
 
-int keypadButtons[4][4] = { 1 ,  2 ,  3 , 'F',
-                            4 ,  5 ,  6 , 'E',
-                            7 ,  8 ,  9 , 'D',
-                           'A',  0 , 'B', 'C'};
-
 /* Initializes the keypad ready for use.
  */
 void keypadInit( void );
@@ -41,3 +38,4 @@ void keypadInit( void );
  *  A 4x4 array of 1's on the pressed buttons and 0's on the unpressed buttons.
  */
 int** getInputs( void );
+#endif //input_h

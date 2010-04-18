@@ -14,6 +14,11 @@
 
 #include "input.h"
 
+int keypadButtons[4][4] = { 1 ,  2 ,  3 , 'F',
+                            4 ,  5 ,  6 , 'E',
+                            7 ,  8 ,  9 , 'D',
+                           'A',  0 , 'B', 'C'};
+
 static int K_ROWS_ARRAY[4] = {K_ROW_0, K_ROW_1, K_ROW_2, K_ROW_3};
 static int K_COLUMNS_ARRAY[4] = {K_COLUMN_0, K_COLUMN_1, K_COLUMN_2, K_COLUMN_3};
 int k_results[4][4];
