@@ -34,8 +34,8 @@ void keypadInit( void );
 
 /* Gets the currently pressed keypad buttons.
  * 
- * Returns: 
+ * Returns:
  *  A 4x4 array of 1's on the pressed buttons and 0's on the unpressed buttons.
  */
-int** getInputs( void );
+void getInputs( int results[][] );
 #endif //input_h
