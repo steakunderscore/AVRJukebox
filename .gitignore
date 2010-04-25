@@ -5,6 +5,7 @@
 *.map
 *.hex
 *.dep
+arm-elf
 # ignore the eclipse files too
 .cproject
 .project

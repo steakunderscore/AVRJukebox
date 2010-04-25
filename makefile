@@ -32,7 +32,7 @@ DDEFS =
 DADEFS = 
 
 # List all default directories to look for include files here
-DINCDIR = ~/workspace/gnuarm/arm-elf/include/
+DINCDIR = ./arm-elf/include/ #This should be the directory with the std libs
 
 # List the default directory to look for the libraries here
 DLIBDIR =
