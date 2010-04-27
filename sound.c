@@ -18,12 +18,12 @@ void soundInit( void ) {
     AT91F_PIO_CfgPeriph(AT91C_BASE_PIOA, SPI_PERIPH, 0x0);  //Sets the output lines required for the SPI.
     AT91F_SPI_CfgPMC(); // Enables the SPI periphial clock.
     AT91F_SPI_CfgMode (AT91C_BASE_SPI, SPI_MODE); //Sets the SPI's mode.
+    AT91F_SPI_CfgCs(AT91C_BASE_SPI, 0, CS_REG);
 }
 
 void sendData( uint8_t data ) {
-    char output = ((0x9 << 8) | data);
-    AT91F_SPI_CfgCs(AT91C_BASE_SPI, 0, CS_REG);
-    if (AT91F_SPI_SendFrame(AT91C_BASE_SPI, &output, 16, 0x0, 0)) {
+    char output[2] = {(0x9 << 8), data};
+    if (AT91F_SPI_SendFrame(AT91C_BASE_SPI, &output, 16, 0x0, 0)) { //might need 2 instead of 16
       //All's good
     } else {
       //PANIC
