@@ -12,6 +12,7 @@
 #define input_h
 // Include Standard files
 #include "Board.h"
+#include <stdint.h>
 
 
 // Keypad Pin Definitions
@@ -32,10 +33,8 @@
  */
 void keypadInit( void );
 
-/* Gets the currently pressed keypad buttons.
- * 
- * Returns:
- *  A 4x4 array of 1's on the pressed buttons and 0's on the unpressed buttons.
+/* Gets the first found pressed button and returns it in the parameter.  Returns
+ * true if a button was pressed, otherwise false.
  */
-void getInputs( int results[][] );
+uint8_t getInput( uint8_t* button );
 #endif //input_h

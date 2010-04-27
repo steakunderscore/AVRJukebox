@@ -10,13 +10,22 @@
 
 #include "sound.h"
 
+#define SPI_PERIPH (AT91C_PA13_MOSI | AT91C_PA14_SPCK | AT91C_PA11_NPCS0 | AT91C_PA12_MISO)
+#define SPI_MODE ((AT91C_SPI_MSTR | AT91C_SPI_PS) & ~(AT91C_SPI_PCSDEC | AT91C_SPI_LLB))
+#define CS_REG ((AT91C_SPI_NCPHA | AT91C_SPI_BITS_16 | (0x0A << 8)) & ~(AT91C_SPI_CSAAT | AT91C_SPI_CPOL))
 void soundInit( void ) {
-    AT91F_SPI_Enable(AT91C_BASE_SPI)
-    //TODO: initilize the output for the DAC
+    AT91F_SPI_Enable(AT91C_BASE_SPI); // Enables the SPI.
+    AT91F_PIO_CfgPeriph(AT91C_BASE_PIOA, SPI_PERIPH, 0x0);  //Sets the output lines required for the SPI.
+    AT91F_SPI_CfgPMC(); // Enables the SPI periphial clock.
+    AT91F_SPI_CfgMode (AT91C_BASE_SPI, SPI_MODE); //Sets the SPI's mode.
 }
 
-void sendData( int data ) {
-    int control = 0x9;
-    AT91F_SPI_CfgCs(AT91C_BASE_SPI, 0, 1)
-    AT91F_SPI_SendFrame(AT91C_BASE_SPI
+void sendData( uint8_t data ) {
+    char output = ((0x9 << 8) | data);
+    AT91F_SPI_CfgCs(AT91C_BASE_SPI, 0, CS_REG);
+    if (AT91F_SPI_SendFrame(AT91C_BASE_SPI, &output, 16, 0x0, 0)) {
+      //All's good
+    } else {
+      //PANIC
+    }
 }
