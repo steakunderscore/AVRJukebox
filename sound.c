@@ -23,7 +23,7 @@ void soundInit( void ) {
 }
 
 void sendData( char data ) {
-    while (! AT91F_PDC_IsTxEmpty((AT91PS_PDC) &(pSPI->SPI_RPR)) {
+    while (! AT91F_PDC_IsTxEmpty((AT91PS_PDC) &(AT91C_BASE_SPI->SPI_RPR))) {
         // Wait
     }
     
