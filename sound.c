@@ -9,6 +9,7 @@
  */
 
 #include "sound.h"
+#include <stdlib.h>
 
 #define SPI_PERIPH (AT91C_PA13_MOSI | AT91C_PA14_SPCK | AT91C_PA11_NPCS0 | AT91C_PA12_MISO)
 #define SPI_MODE ((AT91C_SPI_MSTR | AT91C_SPI_PS) & ~(AT91C_SPI_PCSDEC | AT91C_SPI_LLB))
@@ -22,14 +23,14 @@ void soundInit( void ) {
 }
 
 void sendData( char data ) {
-    while (! AT91F_PDC_IsTxEmpty(AT91C_BASE_SPI)) {
+    while (! AT91F_PDC_IsTxEmpty((AT91PS_PDC) &(pSPI->SPI_RPR)) {
         // Wait
     }
     
     char *output = calloc(2, sizeof(char));
     output[0] = 0x9;
     output[1] = (char)data;
-    if (AT91F_SPI_SendFrame(AT91C_BASE_SPI, &output, 16, 0x0, 0)) { //might need 2 instead of 16
+    if (AT91F_SPI_SendFrame(AT91C_BASE_SPI, output, 16, 0x0, 0)) { //might need 2 instead of 16
       //All's good
     } else {
       //PANIC
