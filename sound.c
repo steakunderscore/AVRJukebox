@@ -27,9 +27,7 @@ void sendData( char data ) {
         // Wait
     }
     
-    char *output = calloc(2, sizeof(char));
-    output[0] = 0x9;
-    output[1] = (char)data;
+    static char output[2] = {0x9, data};
     if (AT91F_SPI_SendFrame(AT91C_BASE_SPI, output, 16, 0x0, 0)) { //might need 2 instead of 16
       //All's good
     } else {
