@@ -7,3 +7,6 @@
  * License:
  *      GNU General Public License (see LICENSE in root folder)
  */
+
+// Note defines as number of microseconds per period.
+#define C4 3822
