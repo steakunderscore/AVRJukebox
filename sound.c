@@ -23,13 +23,11 @@ void soundInit( void ) {
 }
 
 void sendData( char data ) {
-    while (! AT91F_PDC_IsTxEmpty((AT91PS_PDC) &(pSPI->SPI_RPR)) {
+    while (! AT91F_PDC_IsTxEmpty((AT91PS_PDC) &(AT91C_BASE_SPI->SPI_RPR))) {
         // Wait
     }
     
-    char *output = calloc(2, sizeof(char));
-    output[0] = 0x9;
-    output[1] = (char)data;
+    static char output[2] = {0x9, data};
     if (AT91F_SPI_SendFrame(AT91C_BASE_SPI, output, 16, 0x0, 0)) { //might need 2 instead of 16
       //All's good
     } else {
