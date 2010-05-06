@@ -54,18 +54,26 @@ void resetMusic() {
 }
 
 void stopMusic() {
-    // Disconnect interrupt.
+    AT91F_PITDisableInt(AT91C_BASE_PIT);
 }
 
-void startMusic() {
+void init() {
     AT91F_AIC_ConfigureIt(
         AT91C_BASE_AIC,
         AT91C_ID_SYS, // From http://coding.derkeiler.com/Archive/General/comp.arch.embedded/2007-04/msg00267.html
         (AT91C_AIC_PRIOR & (0x7 << 3)),
         AT91C_AIC_SRCTYPE_EXT_HIGH_LEVEL,
         callback
-    )
-    // Set up and start timer.
+    );
+    AT91F_PITInit(
+        AT91C_BASE_PIT,
+        CALLBACK_TIME,
+        MCK/1000000
+    );
+}
+
+void startMusic() {
+    AT91F_PITEnableInt(AT91C_BASE_PIT);
 }
 
 void setMusic( note_t *music_p, uint16_t quaver ) {
@@ -78,6 +86,7 @@ void setMusic( note_t *music_p, uint16_t quaver ) {
 
 
 void callback() {
+    AT91F_PITGetStatus(AT91C_BASE_PIT);
     currentTime += CALLBACK_TIME;
     if (currentTime > quaverTime) {
         currentQuaver++;
