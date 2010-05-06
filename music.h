@@ -8,6 +8,9 @@
  *      GNU General Public License (see LICENSE in root folder)
  */
 
+#include "Board.h"
+#include <stdint.h>
+
 // Number of microseconds between callbacks.
 #define CALLBACK_TIME 100
 
