@@ -8,6 +8,9 @@
  *      GNU General Public License (see LICENSE in root folder)
  */
 
+// Number of microseconds between callbacks.
+#define CALLBACK_TIME 100
+
 // Note defines as number of microseconds per period.
 #define C4 3822
 #define D4 3405
@@ -24,6 +27,3 @@ typedef struct note {
 
 /* Sets the music to be played to the given music with a given quaverlength. */
 void setMusic( note_t *music_p, uint16_t quaverLength );
-
-/* Gets the amplitude for the note at a time measured in microseconds. */
-uint8_t getAmplitude( uint32_t time );

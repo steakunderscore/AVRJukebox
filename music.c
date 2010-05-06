@@ -18,11 +18,6 @@ static const uint8_t quarterSine[64] = {
     117,118,119,120,121,122,123,124,124,125,126,126,127,127,127,127,127
 }
 
-static note_t *musicPointer;
-static uint16_t quaver;
-
-// Gets the amplitude for a specific note a specific time after the note started
-// playing in microseconds.
 uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
     uint16_t period;
     
@@ -49,21 +44,36 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
     }
 }
 
-void setMusic( note_t *music_p, uint16_t quaverLength ) {
+static note_t *musicPointer;
+static uint16_t quaverTime, currentNote, currentQuaver, currentTime;
+
+void setMusic( note_t *music_p, uint16_t quaver ) {
+    stopMusc();
     music = music_p;
-    quaver = quaverLength;
+    quaverTime = quaver;
+    resetMusic();
+    startMusic();
 }
 
-uint8_t getAmplitude( uint32_t time ) {
-    uint32_t currentTime;
-    uint16_t currentNote = 0;
-    uint16_t currentQuaver = time / quaver + 1;
-    
-    while (currentQuaver > music[currentNote].length) {
-        currentQuaver -= music[currentNote].length;
-        currentNote++;
+void resetMusic() {
+    currentNote = 0;
+    currentQuaver = 1;
+    currentTime = 0;
+}
+
+void callback() {
+    currentTime += CALLBACK_TIME;
+    if (currentTime > quaverTime) {
+        currentQuaver++;
+        currentTime -= quaverTime;
     }
-    
-    currentTime = (currentQuaver - 1) * quaver + time % quaver
-    return getNotesAmplitude(&music[currentNote], currentTime);
+    if (currentQuaver > music[currentNote].length) {
+        currentNote++;
+        currentQuaver = 1;
+    }
+    if (music[currentNote].timePeriod == 0) {
+        stopMusic();
+        return;
+    }
+    sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * (currentQuaver - 1))
 }
