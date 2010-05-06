@@ -48,6 +48,10 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
 static note_t *music;
 static uint16_t quaverTime, currentNote, currentQuaver, currentTime;
 
+void stopMusic( void ) {
+    AT91F_PITDisableInt(AT91C_BASE_PITC);
+}
+
 void callback( void ) {
     AT91F_PITGetStatus(AT91C_BASE_PITC);
     currentTime += CALLBACK_TIME;
@@ -70,10 +74,6 @@ void resetMusic( void ) {
     currentNote = 0;
     currentQuaver = 1;
     currentTime = 0;
-}
-
-void stopMusic( void ) {
-    AT91F_PITDisableInt(AT91C_BASE_PITC);
 }
 
 void init( void ) {
