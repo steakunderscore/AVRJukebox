@@ -67,7 +67,7 @@ void callback( void ) {
         stopMusic();
         return;
     }
-    sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * (currentQuaver - 1))
+    sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * (currentQuaver - 1));
 }
 
 void resetMusic( void ) {
