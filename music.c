@@ -54,7 +54,7 @@ void resetMusic() {
 }
 
 void stopMusic() {
-    AT91F_PITDisableInt(AT91C_BASE_PIT);
+    AT91F_PITDisableInt(AT91C_BASE_PITC);
 }
 
 void init() {
@@ -66,14 +66,14 @@ void init() {
         callback
     );
     AT91F_PITInit(
-        AT91C_BASE_PIT,
+        AT91C_BASE_PITC,
         CALLBACK_TIME,
         MCK/1000000
     );
 }
 
 void startMusic() {
-    AT91F_PITEnableInt(AT91C_BASE_PIT);
+    AT91F_PITEnableInt(AT91C_BASE_PITC);
 }
 
 void setMusic( note_t *music_p, uint16_t quaver ) {
@@ -86,7 +86,7 @@ void setMusic( note_t *music_p, uint16_t quaver ) {
 
 
 void callback() {
-    AT91F_PITGetStatus(AT91C_BASE_PIT);
+    AT91F_PITGetStatus(AT91C_BASE_PITC);
     currentTime += CALLBACK_TIME;
     if (currentTime > quaverTime) {
         currentQuaver++;
