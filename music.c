@@ -96,7 +96,7 @@ void startMusic( void ) {
 }
 
 void setMusic( note_t *music_p, uint16_t quaver ) {
-    stopMusc();
+    stopMusic();
     music = music_p;
     quaverTime = quaver;
     resetMusic();
