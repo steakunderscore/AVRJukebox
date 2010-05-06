@@ -18,24 +18,16 @@
  */
 int main(void)
 {
-    int i = 0;
     int j = 0;
+    uint8_t result = 0;
+
     displayInit();
     keypadInit();
     soundInit();
 
     for(;;) {
-        i++;
-        if (i > 100066) {
-            i = 0;
-            setError(j++); 
-            /*setDisplay(0,j++);
-            setDisplay(1,j++);
-            setDisplay(2,j++);
-            setDisplay(3,j++);*/
-            if ( j > 0xF) {
-                j = 0;
-            }
+        if (getInput(&result)) {
+            setDisplay(j++,result);
         }
 
         //int** inputs = getInputs();
