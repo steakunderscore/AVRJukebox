@@ -22,11 +22,11 @@ void soundInit( void ) {
 }
 
 void sendData( uint8_t data ) {
-    uint16_t output = 0x09 << 8 + data;
+    uint16_t output = (0x09 << 8) + data;
     
-    while (! AT91F_PDC_IsTxEmpty((AT91PS_PDC) &(AT91C_BASE_SPI->SPI_RPR))) {
+    while (! AT91F_PDC_IsTxEmpty((AT91PS_PDC) & (AT91C_BASE_SPI->SPI_RPR))) {
         // Wait
     }
     
-    pSPI->SPI_TDR = data;
+    AT91C_BASE_SPI->SPI_TDR = output;
 }
