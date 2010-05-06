@@ -28,19 +28,19 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
     }
     
     if (time < (period >> 2)) { // First quater-wave.
-        return 128 + quaterSine[(time << 6) / period];
+        return 128 + quarterSine[(time << 6) / period];
     }
     else if (time < (period >> 1)) { // Second quater-wave.
         time = time % (period >> 2);
-        return 128 + quaterSine[63 - (time << 6) / period];
+        return 128 + quarterSine[63 - (time << 6) / period];
     }
     else if (time < ((period >> 2) + (period >> 1))) { // Third quater-wave.
         time = time % (period >> 2);
-        return 128 - quaterSine[(time << 6) / period];
+        return 128 - quarterSine[(time << 6) / period];
     }
     else { // Final quater-wave.
         time = time % (period >> 2);
-        return 128 - quaterSine[63 - (time << 6) / period];
+        return 128 - quarterSine[63 - (time << 6) / period];
     }
 }
 
