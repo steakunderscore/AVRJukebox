@@ -47,6 +47,27 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
 static note_t *musicPointer;
 static uint16_t quaverTime, currentNote, currentQuaver, currentTime;
 
+void resetMusic() {
+    currentNote = 0;
+    currentQuaver = 1;
+    currentTime = 0;
+}
+
+void stopMusic() {
+    // Disconnect interrupt.
+}
+
+void startMusic() {
+    AT91F_AIC_ConfigureIt(
+        AT91C_BASE_AIC,
+        AT91C_ID_SYS, // From http://coding.derkeiler.com/Archive/General/comp.arch.embedded/2007-04/msg00267.html
+        (AT91C_AIC_PRIOR & (0x7 << 3)),
+        AT91C_AIC_SRCTYPE_EXT_HIGH_LEVEL,
+        callback
+    )
+    // Set up and start timer.
+}
+
 void setMusic( note_t *music_p, uint16_t quaver ) {
     stopMusc();
     music = music_p;
@@ -55,11 +76,6 @@ void setMusic( note_t *music_p, uint16_t quaver ) {
     startMusic();
 }
 
-void resetMusic() {
-    currentNote = 0;
-    currentQuaver = 1;
-    currentTime = 0;
-}
 
 void callback() {
     currentTime += CALLBACK_TIME;
