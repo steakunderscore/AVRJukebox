@@ -8,42 +8,62 @@
  *      GNU General Public License (see LICENSE in root folder)
  */
 
-static const uint8_t quarterSine[] = {
-    0,4,8,12,16,20,23,27,31,35,39,43,47,50,54,58,61,65,68,71,75,78,81,84,87,90,
-    93,96,98,101,103,105,108,110,112,114,,115,117,119,120,121,122,123,124,125,
-    26,126,127,127,127
+#include "music.h"
+
+// An array of the values of a sine wave between 0 and pi/2-pi/128 with 
+// intervals of pi/128 and an ampltitude of 128.
+static const uint8_t quarterSine[64] = {
+    0,3,6,9,12,15,18,21,24,28,31,34,37,40,43,46,48,51,54,57,60,63,65,68,71,73,
+    76,78,81,83,85,88,90,92,94,96,98,100,102,104,106,108,109,111,112,114,115,
+    117,118,119,120,121,122,123,124,124,125,126,126,127,127,127,127,127
 }
 
-struct note {
-    uint16_t timePeriod; // The period of the note to play in microseconds, generally use the defines from music.h
-    uint8_t length; // The length of the note in number of quavers.
+static note_t *musicPointer;
+static uint16_t quaver;
+
+// Gets the amplitude for a specific note a specific time after the note started
+// playing in microseconds.
+uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
+    uint16_t period;
+    
+    period = note->timePeriod;
+    
+    if (time > period) {
+        time = time % note->timePeriod;
+    }
+    
+    if (time < (period >> 2)) { // First quater-wave.
+        return 128 + quaterSine[(time << 6) / period];
+    }
+    else if (time < (period >> 1)) { // Second quater-wave.
+        time = time % (period >> 2);
+        return 128 + quaterSine[63 - (time << 6) / period];
+    }
+    else if (time < ((period >> 2) + (period >> 1))) { // Third quater-wave.
+        time = time % (period >> 2);
+        return 128 - quaterSine[(time << 6) / period];
+    }
+    else { // Final quater-wave.
+        time = time % (period >> 2);
+        return 128 - quaterSine[63 - (time << 6) / period];
+    }
 }
 
-note maryHadALittleLamb[] = {
-    {E4,2},
-    {D4,2},
-    {C4,2},
-    {D4,2},
-    {E4,2},
-    {E4,2},
-    {E4,4},
-    {D4,2},
-    {D4,2},
-    {D4,4},
-    {E4,2},
-    {G4,2},
-    {G4,4},
-    {E4,2},
-    {D4,2},
-    {C4,2},
-    {D4,2},
-    {E4,2},
-    {E4,2},
-    {E4,2},
-    {E4,2},
-    {D4,2},
-    {D4,2},
-    {E4,2},
-    {D4,2},
-    {C4,8}
+void setMusic( note_t *music_p, uint16_t quaverLength ) {
+    music = music_p;
+    quaver = quaverLength;
+}
+
+uint8_t getAmplitude( uint32_t time ) {
+    uint32_t currentTime;
+    uint16_t currentNote = 0;
+    uint16_t currentQuaver = time / quaver + 1;
+    
+    while (currentQuaver > music[currentNote].length) {
+        currentQuaver -= music[currentNote].length;
+        currentNote++;
+    }
+    
+    currentTime = (currentQuaver - 1) * quaver + time % quaver
+    return getNotesAmplitude(&music[currentNote], currentTime);
 }
