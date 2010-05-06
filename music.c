@@ -9,6 +9,7 @@
  */
 
 #include "music.h"
+#include "sound.h"
 
 // An array of the values of a sine wave between 0 and pi/2-pi/128 with 
 // intervals of pi/128 and an ampltitude of 128.
@@ -44,48 +45,10 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
     }
 }
 
-static note_t *musicPointer;
+static note_t *music;
 static uint16_t quaverTime, currentNote, currentQuaver, currentTime;
 
-void resetMusic() {
-    currentNote = 0;
-    currentQuaver = 1;
-    currentTime = 0;
-}
-
-void stopMusic() {
-    AT91F_PITDisableInt(AT91C_BASE_PITC);
-}
-
-void init() {
-    AT91F_AIC_ConfigureIt(
-        AT91C_BASE_AIC,
-        AT91C_ID_SYS, // From http://coding.derkeiler.com/Archive/General/comp.arch.embedded/2007-04/msg00267.html
-        (AT91C_AIC_PRIOR & (0x7 << 3)),
-        AT91C_AIC_SRCTYPE_EXT_HIGH_LEVEL,
-        callback
-    );
-    AT91F_PITInit(
-        AT91C_BASE_PITC,
-        CALLBACK_TIME,
-        MCK/1000000
-    );
-}
-
-void startMusic() {
-    AT91F_PITEnableInt(AT91C_BASE_PITC);
-}
-
-void setMusic( note_t *music_p, uint16_t quaver ) {
-    stopMusc();
-    music = music_p;
-    quaverTime = quaver;
-    resetMusic();
-    startMusic();
-}
-
-
-void callback() {
+void callback( void ) {
     AT91F_PITGetStatus(AT91C_BASE_PITC);
     currentTime += CALLBACK_TIME;
     if (currentTime > quaverTime) {
@@ -101,4 +64,41 @@ void callback() {
         return;
     }
     sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * (currentQuaver - 1))
+}
+
+void resetMusic( void ) {
+    currentNote = 0;
+    currentQuaver = 1;
+    currentTime = 0;
+}
+
+void stopMusic( void ) {
+    AT91F_PITDisableInt(AT91C_BASE_PITC);
+}
+
+void init( void ) {
+    AT91F_AIC_ConfigureIt(
+        AT91C_BASE_AIC,
+        AT91C_ID_SYS, // From http://coding.derkeiler.com/Archive/General/comp.arch.embedded/2007-04/msg00267.html
+        (AT91C_AIC_PRIOR & (0x7 << 3)),
+        AT91C_AIC_SRCTYPE_EXT_HIGH_LEVEL,
+        callback
+    );
+    AT91F_PITInit(
+        AT91C_BASE_PITC,
+        CALLBACK_TIME,
+        MCK/1000000
+    );
+}
+
+void startMusic( void ) {
+    AT91F_PITEnableInt(AT91C_BASE_PITC);
+}
+
+void setMusic( note_t *music_p, uint16_t quaver ) {
+    stopMusc();
+    music = music_p;
+    quaverTime = quaver;
+    resetMusic();
+    startMusic();
 }
