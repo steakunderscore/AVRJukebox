@@ -23,10 +23,12 @@ void soundInit( void ) {
 
 void sendData( uint8_t data ) {
     uint16_t output = (0x09 << 8) + data;
+    volatile uint8_t waitTime;
     
     while (! AT91F_PDC_IsTxEmpty((AT91PS_PDC) & (AT91C_BASE_SPI->SPI_RPR))) {
         // Wait
     }
+    for (waitTime = 0; waitTime < 10; waitTime++); // Ensure CS goes low
     
     AT91C_BASE_SPI->SPI_TDR = output;
 }
