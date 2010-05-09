@@ -26,17 +26,39 @@ void keypadInit() {
        AT91F_PIO_CfgInput(AT91C_BASE_PIOA, K_COLUMNS);
 }
 
-//    int *results = calloc(4*4, sizeof(*results))
-uint8_t getInput(uint8_t* result) {
+uint8_t getInput(uint8_t *result) {
     uint8_t i, j;
     int input;
     
+    // Check for any key press.
+    clear(K_ROWS);
+    if ((get & K_COLUMNS) == K_COLUMNS) {
+        set(K_ROWS);
+        return 0;
+    }
+    set(K_ROWS);
+    
+    // Wait for de-bounce
+    /* TODO: Start 20 ms timer */
+    while (/* TODO: Timer not finished */ 1) {
+        // Wait
+    }
+    
+    // Check for any key press again.
+    clear(K_ROWS);
+    if ((get & K_COLUMNS) == K_COLUMNS) {
+        return 0;
+        set(K_ROWS);
+    }
+    set(K_ROWS);
+    
+    // Find pressed key
     for (i = 0; i <= 3; i++) {
-        clear(K_ROWS);
-        set(K_ROWS_ARRAY[i]);
+        set(K_ROWS);
+        clear(K_ROWS_ARRAY[i]);
         input = get;
         for (j = 0; j <= 3; j++) {
-            if (input & K_COLUMNS_ARRAY[j]) {
+            if ((input & K_COLUMNS_ARRAY[j]) == 0) {
               *result =  keypadButtons[i][j];
               return 1;
             }
