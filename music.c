@@ -59,20 +59,20 @@ void callback( void ) {
         currentQuaver++;
         currentTime -= quaverTime;
     }
-    if (currentQuaver > music[currentNote].length) {
+    if (currentQuaver >= music[currentNote].length) {
         currentNote++;
-        currentQuaver = 1;
+        currentQuaver = 0;
     }
     if (music[currentNote].timePeriod == 0) {
         stopMusic();
         return;
     }
-    sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * (currentQuaver - 1)));
+    sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * currentQuaver));
 }
 
 void resetMusic( void ) {
     currentNote = 0;
-    currentQuaver = 1;
+    currentQuaver = 0;
     currentTime = 0;
 }
 
