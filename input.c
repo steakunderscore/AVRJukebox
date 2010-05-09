@@ -7,23 +7,19 @@
  * License:
  *      GNU General Public License (see LICENSE in root folder)
  */
-#define clear(x) AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, x)
-#define set(x) AT91F_PIO_SetOutput(AT91C_BASE_PIOA, x)
-#define get AT91F_PIO_GetInput(AT91C_BASE_PIOA)
-
 #include "input.h"
 
-int keypadButtons[4][4] = {{ 0x1 , 0x2 , 0x3 , 0xF },
-                           { 0x4 , 0x5 , 0x6 , 0xE },
+int keypadButtons[4][4] = {{ 0xA , 0x0 , 0xB , 0xC },
                            { 0x7 , 0x8 , 0x9 , 0xD },
-                           { 0xA , 0x0 , 0xB , 0xC }};
+                           { 0x4 , 0x5 , 0x6 , 0xE },
+                           { 0x1 , 0x2 , 0x3 , 0xF }};
 
 static int K_ROWS_ARRAY[4] = {K_ROW_0, K_ROW_1, K_ROW_2, K_ROW_3};
 static int K_COLUMNS_ARRAY[4] = {K_COLUMN_0, K_COLUMN_1, K_COLUMN_2, K_COLUMN_3};
 
 void keypadInit() {
        AT91F_PIO_CfgOutput(AT91C_BASE_PIOA, K_COLUMNS);
-       AT91F_PIO_CfgInput(AT91C_BASE_PIOA, K_COLUMNS);
+       AT91F_PIO_CfgInput(AT91C_BASE_PIOA, K_ROWS);
 }
 
 uint8_t getInput(uint8_t *result) {
@@ -31,32 +27,32 @@ uint8_t getInput(uint8_t *result) {
     int input;
     
     // Check for any key press.
-    clear(K_COLUMNS);
-    if ((get & K_ROWS) == K_ROWS) {
-        set(K_COLUMNS);
+    AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, K_COLUMNS);
+    if (((input = AT91F_PIO_GetInput(AT91C_BASE_PIOA)) & K_ROWS) == K_ROWS) {
+        AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
         return 0;
     }
-    set(K_COLUMNS);
+    AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
     
     // Wait for de-bounce
     /* TODO: Start 20 ms timer */
-    while (/* TODO: Timer not finished */ 1) {
+    while (/* TODO: Timer not finished */ 0) {
         // Wait
     }
     
     // Check for any key press again.
-    clear(K_COLUMNS);
-    if ((get & K_ROWS) == K_ROWS) {
+    AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, K_COLUMNS);
+    if ((AT91F_PIO_GetInput(AT91C_BASE_PIOA) & K_ROWS) == K_ROWS) {
         return 0;
-        set(K_COLUMNS);
+        AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
     }
-    set(K_COLUMNS);
+    AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
     
     // Find pressed key
     for (i = 0; i <= 3; i++) {
-        set(K_COLUMNS);
-        clear(K_COLUMNS_ARRAY[i]);
-        input = get;
+        AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
+        AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, K_COLUMNS_ARRAY[i]);
+        input = AT91F_PIO_GetInput(AT91C_BASE_PIOA);
         for (j = 0; j <= 3; j++) {
             if ((input & K_ROWS_ARRAY[j]) == 0) {
               *result =  keypadButtons[j][i];
