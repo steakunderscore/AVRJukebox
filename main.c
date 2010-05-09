@@ -18,7 +18,7 @@
  */
 int main(void)
 {
-    int j = 0;
+    uint8_t j = 0;
     uint8_t result = 0;
 
     displayInit();
@@ -29,10 +29,7 @@ int main(void)
         if (getInput(&result)) {
             setDisplay(j++,result);
         }
-
-        //int** inputs = getInputs();
-        //processInputs(inputs);
-        //...sound stuff
+        j = j > 3 ? 0 : j;
         scrollDisplay();
     }
 }
