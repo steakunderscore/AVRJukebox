@@ -30,6 +30,7 @@
 #define DSEGMENTG  (1<<30)  // PA30
 #define DSEGMENTDP (1<<31)  // PA31
 
+#define NO_SEGMENTS 8
 #define DISPLAY_SEGMENT_MASK  (DSEGMENTA | DSEGMENTB | DSEGMENTC | DSEGMENTD | \
                                DSEGMENTE | DSEGMENTF | DSEGMENTG | DSEGMENTDP )
 
@@ -58,3 +59,6 @@ void scrollDisplay( void );
 //* Output Parameters   : none
 //*--------------------------------------------------------------------------------------
 void setDisplay(int displayNum, int value);
+
+//Display an error message
+void setError(int errorNum);
