@@ -38,4 +38,4 @@ note_t maryHadALittleLamb[] = {
     {D4,2},
     {C4,8},
     {0,0}
-}
+};
