@@ -45,29 +45,41 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
     }
 }
 
-static note_t *music;
-static uint16_t quaverTime, currentNote, currentQuaver, currentTime;
+static note_t **music;
+static uint8_t numTracks;
+static uint16_t quaverTime[MAX_TRACKS], currentNote[MAX_TRACKS],
+                currentQuaver[MAX_TRACKS], currentTime[MAX_TRACKS];
 
 void stopMusic( void ) {
     AT91F_PITDisableInt(AT91C_BASE_PITC);
 }
 
 void callback( void ) {
+    uint8_t i;
+    uint16_t result = 0;
     AT91F_PITGetStatus(AT91C_BASE_PITC);
-    currentTime += CALLBACK_TIME;
-    if (currentTime > quaverTime) {
-        currentQuaver++;
-        currentTime -= quaverTime;
+    for (i = 0; i < numTracks; i++) {
+        currentTime[i] += CALLBACK_TIME;
+        if (currentTime[i] > quaverTime) {
+            currentQuaver[i]++;
+            currentTime[i] -= quaverTime;
+        }
+        if (currentQuaver[i] >= music[i][currentNote[i]].length) {
+            currentNote[i]++;
+            currentQuaver[i] = 0;
+        }
+        if (music[i][currentNote[i]].length == 0) {
+            stopMusic();
+        }
+        if (music[i][currentNote[i]].timePeriod == 0) {
+            result += 0;
+        }
+        else {
+            result += getNotesAmplitude(&music[i][currentNote], currentTime[i] + quaverTime * currentQuaver[i]);
+        }
     }
-    if (currentQuaver >= music[currentNote].length) {
-        currentNote++;
-        currentQuaver = 0;
-    }
-    if (music[currentNote].timePeriod == 0) {
-        stopMusic();
-        return;
-    }
-    sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * currentQuaver));
+    result = result / numTracks;
+    sendData(result);
 }
 
 void resetMusic( void ) {
@@ -95,10 +107,18 @@ void startMusic( void ) {
     AT91F_PITEnableInt(AT91C_BASE_PITC);
 }
 
-void setMusic( note_t *music_p, uint16_t quaver ) {
+void setMusic( note_t **music_p, uint8_t numOfTracks, uint16_t quaver ) {
     stopMusic();
-    music = music_p;
-    quaverTime = quaver;
-    resetMusic();
-    startMusic();
+    if (numTracks > MAX_TRACKS) {
+        music = 0x0;
+        numTracks = 0x0;
+        quaverTime = 0x0;
+    }
+    else {
+        music = music_p;
+        numTracks = numOfTracks;
+        quaverTime = quaver;
+        resetMusic();
+        startMusic();
+    }
 }

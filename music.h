@@ -14,6 +14,9 @@
 // Number of microseconds between callbacks.
 #define CALLBACK_TIME 100
 
+// Maximum number of tracks that can be played at once.
+#define MAX_TRACKS 4
+
 // Note defines as number of microseconds per period.
 #define C4 3822
 #define D4 3405
@@ -29,4 +32,4 @@ typedef struct note {
 } note_t;
 
 /* Sets the music to be played to the given music with a given quaverlength. */
-void setMusic( note_t *music_p, uint16_t quaverLength );
+void setMusic( note_t **music_p, uint8_t numOfTracks, uint16_t quaverLength );
