@@ -47,7 +47,7 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
 
 static note_t **music;
 static uint8_t numTracks;
-static uint16_t quaverTime[MAX_TRACKS], currentNote[MAX_TRACKS],
+static uint16_t quaverTime, currentNote[MAX_TRACKS],
                 currentQuaver[MAX_TRACKS], currentTime[MAX_TRACKS];
 
 void stopMusic( void ) {
@@ -75,7 +75,7 @@ void callback( void ) {
             result += 0;
         }
         else {
-            result += getNotesAmplitude(&music[i][currentNote], currentTime[i] + quaverTime * currentQuaver[i]);
+            result += getNotesAmplitude(&music[i][currentNote[i]], currentTime[i] + quaverTime * currentQuaver[i]);
         }
     }
     result = result / numTracks;
@@ -83,9 +83,12 @@ void callback( void ) {
 }
 
 void resetMusic( void ) {
-    currentNote = 0;
-    currentQuaver = 0;
-    currentTime = 0;
+    uint8_t i;
+    for (i = 0; i < MAX_TRACKS; i++) {
+        currentNote[i] = 0;
+        currentQuaver[i] = 0;
+        currentTime[i] = 0;
+    }
 }
 
 void init( void ) {
