@@ -8,6 +8,8 @@
  *      GNU General Public License (see LICENSE in root folder)
  */
 
+#ifndef music_h
+#define music_h
 #include "Board.h"
 #include <stdint.h>
 
@@ -32,3 +34,4 @@ typedef struct note {
 void setMusic( note_t *music_p, uint16_t quaverLength );
 
 void musicInit( void );
+#endif //music_h
