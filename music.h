@@ -32,3 +32,5 @@ typedef struct note {
 void setMusic( note_t *music_p, uint16_t quaverLength );
 
 void musicInit( void );
+
+void playMusic( void );

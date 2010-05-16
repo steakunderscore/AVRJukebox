@@ -21,11 +21,10 @@ int main(void)
     displayInit();
     keypadInit();
     soundInit();
+    musicInit();
 
     for(;;) {
-        //int** inputs = getInputs();
-        //processInputs(inputs);
-        //...sound stuff
         scrollDisplay();
+        playMusic();
     }
 }
