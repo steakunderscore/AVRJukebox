@@ -37,4 +37,4 @@ void musicInit( void );
 
 void playMusic( void );
 
-#endif //music_h
+#endif /* music_h */
