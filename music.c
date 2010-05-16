@@ -11,7 +11,10 @@
 #include "music.h"
 #include "sound.h"
 
-static uint32_t NUM_TICKS = (CALLBACK_TIME * MCK/1000000 + 8) >> 4;
+static uint32_t NUM_TICKS = (CALLBACK_TIME * (MCK / 1000000) + 8) >> 4;
+static uint8_t playingMusic = 0;
+static note_t *music;
+static uint16_t quaverTime, currentNote, currentQuaver, currentTime;
 
 // An array of the values of a sine wave between 0 and pi/2-pi/128 with 
 // intervals of pi/128 and an ampltitude of 128.
@@ -20,10 +23,6 @@ static const uint8_t quarterSine[64] = {
     76,78,81,83,85,88,90,92,94,96,98,100,102,104,106,108,109,111,112,114,115,
     117,118,119,120,121,122,123,124,124,125,126,126,127,127,127,127,127
 };
-
-static uint8_t playingMusic = 0;
-static const false = 0;
-static const true = 1;
 
 uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
     uint16_t period;
@@ -51,11 +50,8 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
     }
 }
 
-static note_t *music;
-static uint16_t quaverTime, currentNote, currentQuaver, currentTime;
-
 void stopMusic( void ) {
-    playingMusic = false;
+    playingMusic = FALSE;
 }
 
 void playMusic( void ) {
@@ -87,14 +83,11 @@ void resetMusic( void ) {
 }
 
 void init( void ) {
-    AT91F_PITSetPIV(
-        AT91C_BASE_PITC,
-        NUM_TICKS,
-    );
+    AT91F_PITSetPIV(AT91C_BASE_PITC, NUM_TICKS);
 }
 
 void startMusic( void ) {
-    playingMusic = true;
+    playingMusic = TRUE;
 }
 
 void setMusic( note_t *music_p, uint16_t quaver ) {

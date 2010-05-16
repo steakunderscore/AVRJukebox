@@ -13,6 +13,8 @@
 #include "display.h"
 #include "input.h"
 #include "sound.h"
+#include "music.h"
+#include "music_lib.c"
 
 /* Software entry point
  */
