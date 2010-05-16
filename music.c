@@ -82,7 +82,7 @@ void resetMusic( void ) {
     currentTime = 0;
 }
 
-void init( void ) {
+void musicInit( void ) {
     AT91F_PITSetPIV(AT91C_BASE_PITC, NUM_TICKS);
 }
 
