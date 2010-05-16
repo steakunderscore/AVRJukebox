@@ -14,7 +14,7 @@
 static uint32_t NUM_TICKS = (CALLBACK_TIME * (MCK / 1000000) + 8) >> 4;
 static uint8_t playingMusic = 0;
 static note_t *music;
-static uint16_t quaverTime, currentNote, currentQuaver, currentTime;
+static uint32_t quaverTime, currentNote, currentQuaver, currentTime;
 
 // An array of the values of a sine wave between 0 and pi/2-pi/128 with 
 // intervals of pi/128 and an ampltitude of 128.
@@ -54,12 +54,18 @@ void stopMusic( void ) {
     playingMusic = FALSE;
 }
 
+void resetMusic( void ) {
+    currentNote = 0;
+    currentQuaver = 0;
+    currentTime = 0;
+}
+
 void playMusic( void ) {
     uint32_t status;
     if (!playingMusic) {
         return;
     }
-    status = AT91F_PITGetStatus(AT91C_BASE_PITC);
+    status = AT91F_PITGetPIVR(AT91C_BASE_PITC);
     currentTime += ((status & AT91C_PITC_PICNT >> 20) * NUM_TICKS + (status & AT91C_PITC_CPIV)) * CALLBACK_TIME / NUM_TICKS;
     if (currentTime > quaverTime) {
         currentQuaver++;
@@ -70,19 +76,15 @@ void playMusic( void ) {
         currentQuaver = 0;
     }
     if (music[currentNote].timePeriod == 0) {
-        stopMusic();
+        //stopMusic();
+        resetMusic();
         return;
     }
     sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * currentQuaver));
 }
 
-void resetMusic( void ) {
-    currentNote = 0;
-    currentQuaver = 0;
-    currentTime = 0;
-}
-
 void musicInit( void ) {
+    AT91F_PITInit(AT91C_BASE_PITC, CALLBACK_TIME, MCK/1000000);
     AT91F_PITSetPIV(AT91C_BASE_PITC, NUM_TICKS);
 }
 
@@ -90,7 +92,7 @@ void startMusic( void ) {
     playingMusic = TRUE;
 }
 
-void setMusic( note_t *music_p, uint16_t quaver ) {
+void setMusic( note_t *music_p, uint32_t quaver ) {
     stopMusic();
     music = music_p;
     quaverTime = quaver;

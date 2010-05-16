@@ -31,7 +31,7 @@ typedef struct note {
 } note_t;
 
 /* Sets the music to be played to the given music with a given quaverlength. */
-void setMusic( note_t *music_p, uint16_t quaverLength );
+void setMusic( note_t *music_p, uint32_t quaverLength );
 
 void musicInit( void );
 

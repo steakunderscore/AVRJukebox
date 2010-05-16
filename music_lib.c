@@ -10,6 +10,8 @@
 
 #include "music.h"
 
+note_t sine[] = {{C4,6},{0,0}};
+
 note_t maryHadALittleLamb[] = {
     {E4,2},
     {D4,2},
