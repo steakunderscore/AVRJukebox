@@ -11,10 +11,12 @@
 #include "music.h"
 #include "sound.h"
 
-static uint32_t NUM_TICKS = (CALLBACK_TIME * (MCK / 1000000) + 8) >> 4;
-static uint8_t playingMusic = 0;
+// Number of ticks per microsecond
+static const uint32_t NUM_TICKS = (MCK / 1000000);
+
+static uint8_t playingMusic = FALSE;
 static note_t *music;
-static uint32_t quaverTime, currentNote, currentQuaver, currentTime;
+static uint32_t quaverTicks, currentNote, currentQuaver, currentTicks;
 
 // An array of the values of a sine wave between 0 and pi/2-pi/128 with 
 // intervals of pi/128 and an ampltitude of 128.
@@ -24,8 +26,11 @@ static const uint8_t quarterSine[64] = {
     117,118,119,120,121,122,123,124,124,125,126,126,127,127,127,127,127
 };
 
-uint8_t getNotesAmplitude( note_t *note, uint32_t time ) {
+uint8_t getNotesAmplitude( note_t *note, uint32_t tick ) {
+    uint32_t time;
     uint16_t period;
+    
+    time = tick / NUM_TICKS;
     
     period = note->timePeriod;
     
@@ -66,10 +71,10 @@ void playMusic( void ) {
         return;
     }
     status = AT91F_PITGetPIVR(AT91C_BASE_PITC);
-    currentTime += ((status & AT91C_PITC_PICNT >> 20) * NUM_TICKS + (status & AT91C_PITC_CPIV)) * CALLBACK_TIME / NUM_TICKS;
-    if (currentTime > quaverTime) {
+    currentTicks += (status & AT91C_PITC_PICNT >> 20) * NUM_TICKS + (status & AT91C_PITC_CPIV);
+    if (currentTicks > quaverTicks) {
         currentQuaver++;
-        currentTime -= quaverTime;
+        currentTicks -= quaverTicks;
     }
     if (currentQuaver >= music[currentNote].length) {
         currentNote++;
@@ -78,9 +83,10 @@ void playMusic( void ) {
     if (music[currentNote].timePeriod == 0) {
         //stopMusic();
         resetMusic();
+        sendData(128);
         return;
     }
-    sendData(getNotesAmplitude(&music[currentNote], currentTime + quaverTime * currentQuaver));
+    sendData(getNotesAmplitude(&music[currentNote], currentTicks + quaverTicks * currentQuaver));
 }
 
 void musicInit( void ) {
