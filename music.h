@@ -8,6 +8,8 @@
  *      GNU General Public License (see LICENSE in root folder)
  */
 
+#ifndef music_h
+#define music_h
 #include "Board.h"
 #include <stdint.h>
 
@@ -33,3 +35,9 @@ typedef struct note {
 
 /* Sets the music to be played to the given music with a given quaverlength. */
 void setMusic( note_t **music_p, uint8_t numOfTracks, uint16_t quaverLength );
+
+void musicInit( void );
+
+void playMusic( void );
+
+#endif /* music_h */

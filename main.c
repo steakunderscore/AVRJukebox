@@ -13,6 +13,8 @@
 #include "display.h"
 #include "input.h"
 #include "sound.h"
+#include "music.h"
+#include "music_lib.c"
 
 /* Software entry point
  */
@@ -21,11 +23,11 @@ int main(void)
     displayInit();
     keypadInit();
     soundInit();
+    musicInit();
+    setMusic(&sine, 1, 500000);
 
     for(;;) {
-        //int** inputs = getInputs();
-        //processInputs(inputs);
-        //...sound stuff
         scrollDisplay();
+        playMusic();
     }
 }
