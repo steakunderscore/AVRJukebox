@@ -29,12 +29,19 @@
 #define K_COLUMNS   (K_COLUMN_0 | K_COLUMN_1 | K_COLUMN_2 | K_COLUMN_3)
 #define KEYPAD_MASK (K_ROWS | K_COLUMNS)
 
-/* Initializes the keypad ready for use.
- */
+//*--------------------------------------------------------------------------------------
+//* Function Name       : keypadInit
+//* Object              : Initializes the keypad ready for use.
+//* Input Parameters    : none
+//* Output Parameters   : none
+//*--------------------------------------------------------------------------------------
 void keypadInit( void );
 
-/* Gets the first found pressed button and returns it in the parameter.  Returns
- * true if a button was pressed, otherwise false.
- */
-uint8_t getInput( uint8_t* button );
+//*--------------------------------------------------------------------------------------
+//* Function Name       : getInput
+//* Object              : Get input from keypad.
+//* Input Parameters    : none
+//* Output Parameters   : First found pressed button from 0x0 to 0xF. Or returns 0xFF for none
+//*--------------------------------------------------------------------------------------
+uint8_t getInput( void );
 #endif //input_h
