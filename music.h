@@ -20,6 +20,11 @@
 #define MAX_TRACKS 4
 
 // Note defines as number of microseconds per period.
+#define C3 7645
+#define D3 6811
+#define E3 6068
+#define F3 5727
+#define G3 5102
 #define C4 3822
 #define D4 3405
 #define E4 3034
@@ -34,7 +39,7 @@ typedef struct note {
 } note_t;
 
 /* Sets the music to be played to the given music with a given quaverlength. */
-void setMusic( note_t **music_p, uint8_t numOfTracks, uint16_t quaverLength );
+void setMusic( note_t **music_p, uint8_t numOfTracks, uint32_t quaverLength );
 
 void musicInit( void );
 

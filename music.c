@@ -108,7 +108,7 @@ void startMusic( void ) {
     playingMusic = TRUE;
 }
 
-void setMusic( note_t **music_p, uint8_t numOfTracks, uint16_t quaver ) {
+void setMusic( note_t **music_p, uint8_t numOfTracks, uint32_t quaver ) {
     stopMusic();
     if (numTracks > MAX_TRACKS) {
         music = 0x0;
