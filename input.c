@@ -18,32 +18,38 @@ static int K_ROWS_ARRAY[4] = {K_ROW_0, K_ROW_1, K_ROW_2, K_ROW_3};
 static int K_COLUMNS_ARRAY[4] = {K_COLUMN_0, K_COLUMN_1, K_COLUMN_2, K_COLUMN_3};
 
 void keypadInit() {
-       AT91F_PIO_CfgOutput(AT91C_BASE_PIOA, K_COLUMNS);
-       AT91F_PIO_CfgInput(AT91C_BASE_PIOA, K_ROWS);
+    AT91F_PIO_CfgOutput(AT91C_BASE_PIOA, K_COLUMNS);
+    AT91F_PIO_CfgInput(AT91C_BASE_PIOA, K_ROWS);
+
+
+    AT91F_RTTSetTimeBase(AT91C_BASE_RTTC, 1);
+    AT91F_RTTSetAlarmValue(AT91C_BASE_RTTC,20);
 }
 
-uint8_t getInput(uint8_t *result) {
+uint8_t getInput( void ) {
     uint8_t i, j;
     int input;
     
-    // Check for any key press.
+    // Check for any keys pressed. Then quit if none
     AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, K_COLUMNS);
     if (((input = AT91F_PIO_GetInput(AT91C_BASE_PIOA)) & K_ROWS) == K_ROWS) {
         AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
-        return 0;
+        return 0xFF;
     }
+    // Set inputs back high
     AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
     
-    // Wait for de-bounce
-    /* TODO: Start 20 ms timer */
-    while (/* TODO: Timer not finished */ 0) {
-        // Wait
+    // If allarm hasn't accoured, return to stop button bounce
+    if (!(AT91F_RTTGetAlarmValue(AT91C_BASE_RTTC) | AT91C_RTTC_ALMS)) {
+        return 0xFF;
     }
-    
+    /* Start 20 ms timer */
+    AT91F_RTTRestart(AT91C_BASE_RTTC);
+
     // Check for any key press again.
     AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, K_COLUMNS);
     if ((AT91F_PIO_GetInput(AT91C_BASE_PIOA) & K_ROWS) == K_ROWS) {
-        return 0;
+        return 0xFF;
         AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
     }
     AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
@@ -55,11 +61,10 @@ uint8_t getInput(uint8_t *result) {
         input = AT91F_PIO_GetInput(AT91C_BASE_PIOA);
         for (j = 0; j <= 3; j++) {
             if ((input & K_ROWS_ARRAY[j]) == 0) {
-              *result =  keypadButtons[j][i];
-              return 1;
+              return keypadButtons[j][i];
             }
         }
     }
     
-    return 0;
+    return 0xFF;
 }
