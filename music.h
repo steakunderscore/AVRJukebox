@@ -17,10 +17,17 @@
 #define CALLBACK_TIME 100
 
 // Note defines as number of microseconds per period.
-#define C4 3822
-#define D4 3405
-#define E4 3034
-#define G4 2551
+// Note, these are actually 3 octaves above there
+// listed values.
+#define C3 955
+#define D3 851
+#define E3 758
+#define F3 716
+#define G3 638
+#define C4 478
+#define D4 426
+#define E4 379
+#define G4 319
 
 typedef struct note {
     // The period of the note to play in microseconds, generally use the defines
