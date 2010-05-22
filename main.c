@@ -13,6 +13,9 @@
 #include "display.h"
 #include "input.h"
 #include "sound.h"
+#include "music.h"
+#include "music_lib.c"
+#include "led.h"
 
 /* Software entry point
  */
@@ -24,12 +27,20 @@ int main(void)
     displayInit();
     keypadInit();
     soundInit();
+    musicInit();
+    ledInit();
+
+    setRedLed(ON);
+    setMusic(sine, 500000);
 
     for(;;) {
-        if (getInput(&result)) {
-            setDisplay(j++,result);
+        if ((result = getInput()) != 0xFF) {
+            setError(result);
+            setGreenLed(ON);
         }
         j = j > 3 ? 0 : j;
         scrollDisplay();
+        playMusic();
     }
+    setRedLed(OFF);
 }
