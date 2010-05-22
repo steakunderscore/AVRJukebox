@@ -15,6 +15,7 @@
 #include "sound.h"
 #include "music.h"
 #include "music_lib.c"
+#include "led.h"
 
 /* Software entry point
  */
