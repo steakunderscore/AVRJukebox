@@ -15,6 +15,7 @@
 #include "sound.h"
 #include "music.h"
 #include "music_lib.c"
+#include "led.h"
 
 /* Software entry point
  */
@@ -24,6 +25,7 @@ int main(void)
     keypadInit();
     soundInit();
     musicInit();
+    ledInit();
     setMusic(sine, 500000);
 
     for(;;) {
