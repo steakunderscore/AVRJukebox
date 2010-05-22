@@ -26,7 +26,7 @@ void setRedLed( uint8_t status) {
 
 void setGreenLed( uint8_t status) {
     if (status == ON) {
-        AT91F_PIO_SetOutput( AT91C_BASE_PIOA, GREEENLED);
+        AT91F_PIO_SetOutput( AT91C_BASE_PIOA, GREENLED);
     }
     else if (status == OFF) {
         AT91F_PIO_ClearOutput( AT91C_BASE_PIOA, GREENLED);
