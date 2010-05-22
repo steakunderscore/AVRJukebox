@@ -28,6 +28,8 @@
 #define D4 426
 #define E4 379
 #define G4 319
+#define A4 142
+#define B4 127
 #define C5 119
 #define D5 106
 #define E5 95

@@ -26,7 +26,8 @@ int main(void)
     soundInit();
     musicInit();
     ledInit();
-    setMusic(sine, 500000);
+    setMusic(theResistanceIntro, 7000000);
+
 
     for(;;) {
         scrollDisplay();
