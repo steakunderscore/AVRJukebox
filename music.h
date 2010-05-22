@@ -28,6 +28,7 @@
 #define D4 851
 #define E4 758
 #define F4 716
+#define F4S 676
 #define G4 638
 #define G4S 602
 #define A4 568
