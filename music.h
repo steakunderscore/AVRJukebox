@@ -29,11 +29,13 @@
 #define E4 758
 #define F4 716
 #define G4 638
+#define G4S 602
 #define A4 568
 #define B4 506
 #define C5 478
 #define D5 426
 #define E5 379
+#define F5 358
 #define G5 319
 #define A5 284
 #define B5 253
