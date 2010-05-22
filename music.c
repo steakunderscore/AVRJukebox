@@ -85,12 +85,12 @@ void playMusic( void ) {
         }
         if (music[i][currentNote[i]].length == 0) {
             resetMusic();
-            sendData(128);
+            sendData(127);
             return;
         }
 
         if (music[i][currentNote[i]].timePeriod == 0) {
-            result += 0;
+            result += 127;
         }
         else {
             result += getNotesAmplitude(&music[i][currentNote[i]], currentTicks[i] + quaverTicks * currentQuaver[i]);
