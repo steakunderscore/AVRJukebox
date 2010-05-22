@@ -52,6 +52,10 @@ typedef struct note {
     uint8_t length;
 } note_t;
 
+void stopMusic( void );
+void resetMusic( void );
+void startMusic( void );
+
 /* Sets the music to be played to the given music with a given quaverlength. */
 void setMusic( note_t *music_p, uint32_t quaverLength );
 

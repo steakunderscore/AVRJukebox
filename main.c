@@ -21,6 +21,7 @@
  */
 int main(void)
 {
+    uint8_t result;
     displayInit();
     keypadInit();
     soundInit();
