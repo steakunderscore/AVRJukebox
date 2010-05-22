@@ -116,32 +116,32 @@ note_t theResistanceIntro[] = {
 };
 
 note_t happyBirthday[] = {
-    {D4,1}
-    {D4,1}
-    {E4,2}
-    {D4,2}
-    {G4,2}
-    {F4S,4}
-    {D4,1}
-    {D4,1}
-    {E4,2}
-    {D4,2}
-    {A4,2}
-    {G4,4}
-    {D4,1}
-    {D4,1}
-    {D5,2}
-    {B4,2}
-    {G4,2}
-    {F4S,2}
-    {E4,2}
-    {C5,1}
-    {C5,1}
-    {B4,2}
-    {G4,2}
-    {A4,2}
-    {G4,6}
+    {D4,1},
+    {D4,1},
+    {E4,2},
+    {D4,2},
+    {G4,2},
+    {F4S,4},
+    {D4,1},
+    {D4,1},
+    {E4,2},
+    {D4,2},
+    {A4,2},
+    {G4,4},
+    {D4,1},
+    {D4,1},
+    {D5,2},
+    {B4,2},
+    {G4,2},
+    {F4S,2},
+    {E4,2},
+    {C5,1},
+    {C5,1},
+    {B4,2},
+    {G4,2},
+    {A4,2},
+    {G4,6},
     {0,0}
 };
 
-note_t *songs[] = {sine, maryHadALittleLamb, theResistanceIntro, happyBirthday, sine, sine, sine, sine, sine);
+note_t *songs[] = {sine, maryHadALittleLamb, theResistanceIntro, happyBirthday, sine, sine, sine, sine, sine};
