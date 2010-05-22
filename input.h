@@ -14,6 +14,7 @@
 #include "Board.h"
 #include <stdint.h>
 
+#define NULL_BUTTON 0xFF
 
 // Keypad Pin Definitions
 #define K_ROW_0    (1<<0) // PA0

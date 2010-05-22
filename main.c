@@ -35,7 +35,7 @@ int main(void)
 
     for(;;) {
         if ((result = getInput()) != 0xFF) {
-            setError(result);
+            setDisplay(j++,result);
             setGreenLed(ON);
         }
         j = j > 3 ? 0 : j;
