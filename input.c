@@ -46,7 +46,7 @@ uint8_t getInput( void ) {
         return NULL_BUTTON;
     }
     // If allarm hasn't accoured, return to stop button bounce
-    if (!(AT91F_RTTGetAlarmValue(AT91C_BASE_RTTC) | AT91C_RTTC_ALMS)) {
+    if (!(AT91F_RTTGetStatus(AT91C_BASE_RTTC) | AT91C_RTTC_ALMS)) {
         return NULL_BUTTON;
     }
 
