@@ -10,6 +10,7 @@
 
 #include "music.h"
 #include "sound.h"
+#include "led.h"
 
 // Number of ticks per microsecond
 static const uint32_t NUM_TICKS = (MCK / 1000000);
@@ -53,6 +54,7 @@ uint8_t getNotesAmplitude( note_t *note, uint32_t tick ) {
 }
 
 void stopMusic( void ) {
+    setGreenLed(OFF);
     playingMusic = FALSE;
 }
 
@@ -78,8 +80,7 @@ void playMusic( void ) {
         currentQuaver = 0;
     }
     if (music[currentNote].timePeriod == 0) {
-        //stopMusic();
-        resetMusic();
+        stopMusic();
         sendData(128);
         return;
     }
@@ -92,7 +93,9 @@ void musicInit( void ) {
 }
 
 void startMusic( void ) {
+    AT91F_PITGetPIVR(AT91C_BASE_PITC);
     playingMusic = TRUE;
+    setGreenLed(ON);
 }
 
 void setMusic( note_t *music_p, uint32_t quaver ) {
