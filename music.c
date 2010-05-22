@@ -15,7 +15,7 @@
 static const uint32_t NUM_TICKS = (MCK / 1000000);
 
 static uint8_t playingMusic = FALSE, numTracks;
-static note_t **music;
+static track_t *music;
 static uint32_t quaverTicks, currentNote[MAX_TRACKS], currentQuaver[MAX_TRACKS],
                 currentTicks[MAX_TRACKS];
 
@@ -79,24 +79,24 @@ void playMusic( void ) {
             currentQuaver[i]++;
             currentTicks[i] -= quaverTicks;
         }
-        if (currentQuaver[i] >= music[i][currentNote[i]].length) {
+        if (currentQuaver[i] >= music[i].notes[currentNote[i]].length) {
             currentNote[i]++;
             currentQuaver[i] = 0;
         }
-        if (music[i][currentNote[i]].length == 0) {
+        if (music[i].notes[currentNote[i]].length == 0) {
             resetMusic();
             sendData(127);
             return;
         }
 
-        if (music[i][currentNote[i]].timePeriod == 0) {
-            result += 127;
+        if (music[i].notes[currentNote[i]].timePeriod == 0) {
+            result += 127*music[i].weight/256;
         }
         else {
-            result += getNotesAmplitude(&music[i][currentNote[i]], currentTicks[i] + quaverTicks * currentQuaver[i]);
+            result += getNotesAmplitude(&music[i].notes[currentNote[i]], currentTicks[i] + quaverTicks * currentQuaver[i])*music[i].weight/256;
         }
     }
-    sendData(result / numTracks);
+    sendData(result);
 }
 
 void musicInit( void ) {
@@ -108,7 +108,7 @@ void startMusic( void ) {
     playingMusic = TRUE;
 }
 
-void setMusic( note_t **music_p, uint8_t numOfTracks, uint32_t quaver ) {
+void setMusic( track_t *music_p, uint8_t numOfTracks, uint32_t quaver ) {
     stopMusic();
     if (numTracks > MAX_TRACKS) {
         music = 0x0;

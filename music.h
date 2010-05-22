@@ -40,8 +40,13 @@ typedef struct note {
     uint8_t length;
 } note_t;
 
+typedef struct track {
+    uint8_t weight;
+    note_t* notes;
+} track_t;
+
 /* Sets the music to be played to the given music with a given quaverlength. */
-void setMusic( note_t **music_p, uint8_t numOfTracks, uint32_t quaverLength );
+void setMusic( track_t *music_p, uint8_t numOfTracks, uint32_t quaverLength );
 
 void musicInit( void );
 

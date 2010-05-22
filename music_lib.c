@@ -10,7 +10,8 @@
 
 #include "music.h"
 
-note_t sine[] = {{C4,6},{0,0}};
+note_t sine1[] = {{C4,6},{0,0}};
+track_t sine[] = {{255,sine1}};
 
 note_t maryBass1[] = {
     {C3,2},
@@ -99,6 +100,6 @@ note_t marySolo[] = {
     {0,0}
 };
 
-note_t *maryHadALittleLamb[] = {
-    marySolo, maryBass1, maryBass2
+track_t maryHadALittleLamb[] = {
+    {200,marySolo}, {25,maryBass1}, {25,maryBass2}
 };

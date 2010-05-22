@@ -24,7 +24,7 @@ int main(void)
     keypadInit();
     soundInit();
     musicInit();
-    setMusic(maryHadALittleLamb, 3, 500000);
+    setMusic(maryHadALittleLamb, 1, 7000000);
 
     for(;;) {
         scrollDisplay();
