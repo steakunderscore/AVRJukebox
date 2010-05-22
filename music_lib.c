@@ -114,3 +114,5 @@ note_t theResistanceIntro[] = {
     {G4S,10},
     {0,0}
 };
+
+note_t *songs[] = {sine, maryHadALittleLamb, theResistanceIntro, sine, sine, sine, sine, sine, sine);

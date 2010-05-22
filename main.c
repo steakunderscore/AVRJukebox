@@ -26,10 +26,27 @@ int main(void)
     soundInit();
     musicInit();
     ledInit();
-    setMusic(theResistanceIntro, 7000000);
 
+    setRedLed(ON);
 
     for(;;) {
+        if ((result = getInput()) < 0x0C) {
+            switch (result) {
+                case 0xA: { // Stop
+                    stopMusic();
+                    resetMusic();
+                }
+                case 0x0: { // Pause
+                    stopMusic();
+                }
+                case 0xB: { // Play
+                    startMusic();
+                }
+                default: {
+                    setMusic(songs[result], 7000000);
+                }
+            }
+        }
         scrollDisplay();
         playMusic();
     }
