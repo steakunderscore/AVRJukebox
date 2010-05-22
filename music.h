@@ -28,12 +28,12 @@
 #define D4 426
 #define E4 379
 #define G4 319
-#define A4 142
-#define B4 127
-#define C5 119
-#define D5 106
-#define E5 95
-#define F5 89
+#define A4 284
+#define B4 253
+#define C5 239
+#define D5 213
+#define E5 190
+#define F5 179
 
 typedef struct note {
     // The period of the note to play in microseconds, generally use the defines
