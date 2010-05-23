@@ -66,11 +66,13 @@ void resetMusic( void ) {
 
 void playMusic( void ) {
     uint32_t status;
+    uint8_t value;
+    static uint8_t oldValue = 0;
     if (!playingMusic) {
         return;
     }
     status = AT91F_PITGetPIVR(AT91C_BASE_PITC);
-    currentTicks += (status & AT91C_PITC_PICNT >> 20) * NUM_TICKS + (status & AT91C_PITC_CPIV);
+    currentTicks += (status & AT91C_PITC_CPIV);
     if (currentTicks > quaverTicks) {
         currentQuaver++;
         currentTicks -= quaverTicks;
@@ -84,16 +86,19 @@ void playMusic( void ) {
         sendData(128);
         return;
     }
-    sendData(getNotesAmplitude(&music[currentNote], currentTicks + quaverTicks * currentQuaver));
+    value = getNotesAmplitude(&music[currentNote], currentTicks + quaverTicks * currentQuaver);
+    if (value != oldValue) {
+        sendData(oldValue = value);
+    }
 }
 
 void musicInit( void ) {
     AT91F_PITInit(AT91C_BASE_PITC, CALLBACK_TIME, MCK/1000000);
-    AT91F_PITSetPIV(AT91C_BASE_PITC, NUM_TICKS);
+    AT91F_PITSetPIV(AT91C_BASE_PITC, 0xFFFFF);
 }
 
 void startMusic( void ) {
-    AT91F_PITGetPIVR(AT91C_BASE_PITC);
+    volatile uint32_t status = AT91F_PITGetPIVR(AT91C_BASE_PITC);
     playingMusic = TRUE;
     setGreenLed(ON);
 }
