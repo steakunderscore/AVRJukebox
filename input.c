@@ -16,6 +16,7 @@ int keypadButtons[4][4] = {{ 0xA , 0x0 , 0xB , 0xC },
 
 static int K_ROWS_ARRAY[4] = {K_ROW_0, K_ROW_1, K_ROW_2, K_ROW_3};
 static int K_COLUMNS_ARRAY[4] = {K_COLUMN_0, K_COLUMN_1, K_COLUMN_2, K_COLUMN_3};
+static uint8_t lastReturn;
 
 void keypadInit() {
     AT91F_PIO_CfgOutput(AT91C_BASE_PIOA, K_COLUMNS);
@@ -24,10 +25,11 @@ void keypadInit() {
 
     AT91F_RTTSetTimeBase(AT91C_BASE_RTTC, 1);
     AT91F_RTTSetAlarmValue(AT91C_BASE_RTTC,20);
+    lastReturn = 0xFF;
 }
 
 uint8_t getInput( void ) {
-    uint8_t i, j;
+    uint8_t i, j, returnVal;
     int input;
     
     // Check for any keys pressed. Then quit if none
@@ -61,10 +63,14 @@ uint8_t getInput( void ) {
         input = AT91F_PIO_GetInput(AT91C_BASE_PIOA);
         for (j = 0; j <= 3; j++) {
             if ((input & K_ROWS_ARRAY[j]) == 0) {
-              return keypadButtons[j][i];
+              returnVal = keypadButtons[j][i];
             }
         }
     }
-    
-    return 0xFF;
+    if (returnVal != lastReturn) {
+        return returnVal;
+    }
+    else {
+        return 0xFF;
+    }
 }

@@ -9,15 +9,16 @@
  */
 
 #include "Board.h"
+#include <stdint.h>
 
-#define ON      -1
+#define ON      1
 #define OFF     0
 
 /*----------------*/
 /* LED Definition */
 /*----------------*/
-#define REDLED     (1<<13)  // PA13
-#define GREENLED   (1<<14)  // PA14
+#define REDLED     (1<<16)  // PA13
+#define GREENLED   (1<<18)  // PA14
 
 #define LED_MASK  (REDLED | GREENLED)
 
@@ -35,7 +36,7 @@ void ledInit( void );
 //* Input Parameters    : Either ON or OFF. All other values return with no effect
 //* Output Parameters   : none
 //*--------------------------------------------------------------------------------------
-void setRedLed( uint8_t status);
+void setRedLed( uint8_t status );
 
 //*--------------------------------------------------------------------------------------
 //* Function Name       : setGreenLed
@@ -43,4 +44,4 @@ void setRedLed( uint8_t status);
 //* Input Parameters    : Either ON or OFF. All other values return with no effect
 //* Output Parameters   : none
 //*--------------------------------------------------------------------------------------
-void setGreenLed( uint8_t status);
+void setGreenLed( uint8_t status );
