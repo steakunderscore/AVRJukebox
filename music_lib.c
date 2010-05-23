@@ -10,9 +10,11 @@
 
 #include "music.h"
 
-note_t sine[] = {{C4,6},{0,0}};
+note_t sineSolo[] = {{C4,6},{0,0}};
 
-note_t maryHadALittleLamb[] = {
+song_t sine = {200000, sineSolo};
+
+note_t maryHadALittleLambSolo[] = {
     {E4,2},
     {D4,2},
     {C4,2},
@@ -42,7 +44,9 @@ note_t maryHadALittleLamb[] = {
     {0,0}
 };
 
-note_t theResistanceIntro[] = {
+song_t maryHadALittleLamb = {700000, maryHadALittleLambSolo};
+
+note_t theResistanceIntroSolo[] = {
     {E4,2},
     {B4,2},
     {C5,2},
@@ -115,7 +119,9 @@ note_t theResistanceIntro[] = {
     {0,0}
 };
 
-note_t happyBirthday[] = {
+song_t theResistanceIntro = {800000, theResistanceIntroSolo};
+
+note_t happyBirthdaySolo[] = {
     {D4,1},
     {D4,1},
     {E4,2},
@@ -144,4 +150,6 @@ note_t happyBirthday[] = {
     {0,0}
 };
 
-note_t *songs[] = {sine, maryHadALittleLamb, theResistanceIntro, happyBirthday, sine, sine, sine, sine, sine};
+song_t happyBirthday = {500000, happyBirthdaySolo};
+
+song_t songs[] = {maryHadALittleLamb, theResistanceIntro, happyBirthday, sine, sine, sine, sine, sine, sine};
