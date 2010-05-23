@@ -11,7 +11,8 @@
 #include "music.h"
 
 note_t sine1[] = {{C4,6},{0,0}};
-track_t sine[] = {{255,sine1}};
+track_t sineTracks[] = {{255,sine1}};
+song_t sine = {1, 700000, sineTracks};
 
 note_t maryBass1[] = {
     {C3,2},
@@ -100,11 +101,13 @@ note_t marySolo[] = {
     {0,0}
 };
 
-track_t maryHadALittleLamb[] = {
+track_t maryHadALittleLambTracks[] = {
     {200,marySolo}, {25,maryBass1}, {25,maryBass2}
 };
 
-note_t theResistanceIntro[] = {
+song_t maryHadALittleLamb = {3, 700000, maryHadALittleLambTracks};
+
+note_t theResistanceIntroSolo[] = {
     {E4,2},
     {B4,2},
     {C5,2},
@@ -177,7 +180,10 @@ note_t theResistanceIntro[] = {
     {0,0}
 };
 
-note_t happyBirthday[] = {
+track_t theResistanceIntroTracks = {255, theResistanceIntroSolo};
+song_t theResistanceIntro = {1, 700000, theResistanceIntroTracks};
+
+note_t happyBirthdaySolo[] = {
     {D4,1},
     {D4,1},
     {E4,2},
@@ -206,3 +212,7 @@ note_t happyBirthday[] = {
     {0,0}
 };
 
+track_t happyBirthdayTracks = {255, happyBirthdaySolo};
+song_t happyBirthday = {1, 700000, happyBirthdayTracks};
+
+song_t songs[] = {maryHadALittleLamb, theResistanceIntro, happyBirthday, sine, sine, sine, sine, sine, sine};
