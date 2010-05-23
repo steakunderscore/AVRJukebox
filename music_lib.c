@@ -173,4 +173,33 @@ note_t happyBirthdaySolo[] = {
 
 song_t happyBirthday = {10000000, happyBirthdaySolo};
 
-song_t *songs[] = {&maryHadALittleLamb, &theResistanceIntro, &happyBirthday, &sine, &sine, &sine, &sineC3, &sineF3, &sineD4, NULL, NULL, &sineG4, &sineB4, &sineF5, &sineD6};
+note_t pinkPantherSolo[] = {
+    {D3S,3},
+    {E3,18},
+    {0,3},
+    {F3S,3},
+    {G3,18},
+    {0,3},
+    {D3S,3},
+    {E3,9},
+    {F3S,3},
+    {G3,9},
+    {C4,3},
+    {B3,9},
+    {E3,3},
+    {G3,9},
+    {B3,9},
+    {B3B,24},
+    {B3,4},
+    {A3,4},
+    {G3,4},
+    {E3,4},
+    {D3,4},
+    {B3,40},
+    {0,3},
+    {0,0}
+};
+
+song_t pinkPanther = {3000000, pinkPantherSolo};
+
+song_t *songs[] = {&maryHadALittleLamb, &theResistanceIntro, &happyBirthday, &pinkPanther, &sine, &sine, &sineC3, &sineF3, &sineD4, NULL, NULL, &sineG4, &sineB4, &sineF5, &sineD6};
