@@ -9,6 +9,8 @@
  */
 #include "input.h"
 
+#define BUTTON_BOUNCE_DELAY 500
+
 int keypadButtons[4][4] = {{ 0xA , 0x0 , 0xB , 0xC },
                            { 0x7 , 0x8 , 0x9 , 0xD },
                            { 0x4 , 0x5 , 0x6 , 0xE },
@@ -17,45 +19,28 @@ int keypadButtons[4][4] = {{ 0xA , 0x0 , 0xB , 0xC },
 static int K_ROWS_ARRAY[4] = {K_ROW_0, K_ROW_1, K_ROW_2, K_ROW_3};
 static int K_COLUMNS_ARRAY[4] = {K_COLUMN_0, K_COLUMN_1, K_COLUMN_2, K_COLUMN_3};
 static uint8_t lastReturn;
+static uint8_t buttonPress;
+static uint16_t buttonPressCount;
 
 void keypadInit() {
     AT91F_PIO_CfgOutput(AT91C_BASE_PIOA, K_COLUMNS);
     AT91F_PIO_CfgInput(AT91C_BASE_PIOA, K_ROWS);
 
-
-    AT91F_RTTSetTimeBase(AT91C_BASE_RTTC, 1);
-    AT91F_RTTSetAlarmValue(AT91C_BASE_RTTC,20);
-    lastReturn = 0xFF;
+    lastReturn = NULL_BUTTON;
+    buttonPressCount = 0;
 }
 
 uint8_t getInput( void ) {
-    uint8_t i, j, returnVal;
+    uint8_t i, j;
     int input;
     
     // Check for any keys pressed. Then quit if none
     AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, K_COLUMNS);
     if (((input = AT91F_PIO_GetInput(AT91C_BASE_PIOA)) & K_ROWS) == K_ROWS) {
-        AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
-        return 0xFF;
+        return NULL_BUTTON;
     }
-    // Set inputs back high
+    // Set the outputs back high
     AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
-    
-    // If allarm hasn't accoured, return to stop button bounce
-    if (!(AT91F_RTTGetAlarmValue(AT91C_BASE_RTTC) | AT91C_RTTC_ALMS)) {
-        return 0xFF;
-    }
-    /* Start 20 ms timer */
-    AT91F_RTTRestart(AT91C_BASE_RTTC);
-
-    // Check for any key press again.
-    AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, K_COLUMNS);
-    if ((AT91F_PIO_GetInput(AT91C_BASE_PIOA) & K_ROWS) == K_ROWS) {
-        return 0xFF;
-        AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
-    }
-    AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
-    
     // Find pressed key
     for (i = 0; i <= 3; i++) {
         AT91F_PIO_SetOutput(AT91C_BASE_PIOA, K_COLUMNS);
@@ -63,14 +48,35 @@ uint8_t getInput( void ) {
         input = AT91F_PIO_GetInput(AT91C_BASE_PIOA);
         for (j = 0; j <= 3; j++) {
             if ((input & K_ROWS_ARRAY[j]) == 0) {
-              returnVal = keypadButtons[j][i];
+              return keypadButtons[j][i];
             }
         }
     }
-    if (returnVal != lastReturn) {
-        return returnVal;
+    return NULL_BUTTON;
+}
+
+uint8_t getCleanInput( void ) {
+    uint8_t returnVal = getInput();
+    int8_t returnState = FALSE;
+    //First get a result that ignores the button bounce
+    if (buttonPress == returnVal) {
+        if (buttonPressCount > BUTTON_BOUNCE_DELAY ) {
+            buttonPressCount = 0;
+            returnState = TRUE;
+        }
+        else {
+            buttonPressCount++;
+        }
     }
     else {
-        return 0xFF;
+        buttonPress = returnVal;
     }
+
+    // Then return the button only if it's not the same as the last one
+    if (returnState == TRUE && returnVal != lastReturn) {
+        lastReturn = returnVal;
+        return returnVal;
+    }
+    return NULL_BUTTON;
 }
+
