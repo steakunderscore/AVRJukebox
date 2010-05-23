@@ -89,14 +89,14 @@ void setPlay( uint8_t songNum ) {
 
 void setStop( void ) {
     display[0] = 0xB6; // Set the 'S'
-    display[1] = 0xE2; // Set the 'T'
+    display[1] = 0xE0; // Set the 'T'
     display[2] = 0xFC; // Set the 'O'
-    display[3] = 0x9E; // Set the 'P'
+    display[3] = 0xCE; // Set the 'P'
 }
 
 void setPause( uint8_t songNum ) {
     display[0] = 0xCE; // Set the 'P'
-    display[1] = 0xFF; // Set the 'A'
+    display[1] = 0xEE; // Set the 'A'
     display[2] = 0x00;
     setDisplay(3,songNum);
 }
