@@ -19,11 +19,17 @@
 // Note defines as number of microseconds per period.
 // Note, these are actually 3 octaves above there
 // listed values.
+
 #define C3 1911
 #define D3 1703
+#define D3S 1607
 #define E3 1517
 #define F3 1432
+#define F3S 1351
 #define G3 1276
+#define A3 1136
+#define B3B 1073
+#define B3 1012
 #define C4 955
 #define D4 851
 #define E4 758
