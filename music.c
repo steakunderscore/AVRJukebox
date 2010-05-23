@@ -13,7 +13,7 @@
 #include "led.h"
 
 // Number of ticks per microsecond
-static const uint32_t NUM_TICKS = (MCK / 1000000);
+static const uint32_t NUM_TICKS = ((MCK >> 4) / 1000000);
 
 static uint8_t playingMusic = FALSE;
 static note_t *music;

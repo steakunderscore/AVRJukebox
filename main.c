@@ -49,7 +49,7 @@ int main(void)
                 }
                 default: {
                     setPlay(result);
-                    setMusic(songs[result-1], 7000000);
+                    setMusic(songs[result-1], 70000000);
                     playingSong = result;
                 }
             }
