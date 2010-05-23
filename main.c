@@ -34,26 +34,27 @@ int main(void)
     for(;;) {
         if ((result = getCleanInput()) < 0x0C) {
             switch (result) {
-                case 0xA: { // Stop
+                case 0xA:  // Stop
                     stopMusic();
                     resetMusic();
                     setStop();
-                }
-                case 0x0: { // Pause
+                    break;
+                case 0x0:  // Pause
                     stopMusic();
                     setPause(playingSong);
-                }
-                case 0xB: { // Play
+                    break;
+                case 0xB:  // Play
                     startMusic();
                     setPlay(playingSong);
-                }
-                default: {
+                    break;
+                default: 
                     setPlay(result);
                     setMusic(songs[result-1], 7000000);
                     playingSong = result;
-                }
+                    break;
             }
         }
+
         scrollDisplay();
         playMusic();
     }
