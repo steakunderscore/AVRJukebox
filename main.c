@@ -22,6 +22,7 @@
 int main(void)
 {
     uint8_t result;
+    uint8_t playingSong = 0xFF;
     displayInit();
     keypadInit();
     soundInit();
@@ -31,20 +32,25 @@ int main(void)
     setRedLed(ON);
 
     for(;;) {
-        if ((result = getInput()) < 0x0C) {
+        if ((result = getCleanInput()) < 0x0C) {
             switch (result) {
                 case 0xA: { // Stop
                     stopMusic();
                     resetMusic();
+                    setStop();
                 }
                 case 0x0: { // Pause
                     stopMusic();
+                    setPause(playingSong);
                 }
                 case 0xB: { // Play
                     startMusic();
+                    setPlay(playingSong);
                 }
                 default: {
-                    setMusic(songs[result], 7000000);
+                    setPlay(result);
+                    setMusic(songs[result-1], 7000000);
+                    playingSong = result;
                 }
             }
         }

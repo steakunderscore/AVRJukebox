@@ -100,6 +100,7 @@ void musicInit( void ) {
 void startMusic( void ) {
     volatile uint32_t status = AT91F_PITGetPIVR(AT91C_BASE_PITC);
     playingMusic = TRUE;
+    setGreenLed(status ? ON : OFF);
     setGreenLed(ON);
 }
 
