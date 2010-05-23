@@ -20,6 +20,8 @@ const uint8_t states[] = { 0xFC, 0x60, 0xDA, 0xF2, 0x66, 0xB6, 0xBE, 0xE0,
                            0xFE, 0xE6, 0xEE, 0x3E, 0x9C, 0x7A, 0x9E, 0x8E,
                            0x0A }; // Hex chars plus a 'r' for errors
 
+static uint16_t displayCount = 0;
+
 void displayInit() {
     //Setup the display diget selecting outputs
     AT91F_PIO_CfgOutput( AT91C_BASE_PIOA, DISPLAY_MASK );
@@ -32,6 +34,14 @@ void displayInit() {
 
 void scrollDisplay( void ) {
     int i;
+    if (displayCount < 200) {
+        displayCount++;
+        return;
+    }
+    else {
+        displayCount = 0;
+    }
+
     // Clear the display segments
     AT91F_PIO_SetOutput( AT91C_BASE_PIOA, DISPLAY_SEGMENT_MASK);
 
@@ -61,6 +71,34 @@ void setDisplay(int displayNum, int value) {
     else {
         display[displayNum] = states[value];
     }
+}
+
+void clearDisplay( void ) {
+    uint8_t i;
+    for (i = 0; i < NO_SEGMENTS ; i++) {
+        display[i] = 0x00;
+    }
+}
+
+void setPlay( uint8_t songNum ) {
+    display[0] = 0xCE; // Set the 'P'
+    display[1] = 0x1C; // Set the 'L'
+    display[2] = 0x00;
+    setDisplay(3,songNum);
+}
+
+void setStop( void ) {
+    display[0] = 0xB6; // Set the 'S'
+    display[1] = 0xE2; // Set the 'T'
+    display[2] = 0xFC; // Set the 'O'
+    display[3] = 0x9E; // Set the 'P'
+}
+
+void setPause( uint8_t songNum ) {
+    display[0] = 0xCE; // Set the 'P'
+    display[1] = 0xFF; // Set the 'A'
+    display[2] = 0x00;
+    setDisplay(3,songNum);
 }
 
 void setError(int errorNum) {

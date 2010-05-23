@@ -33,7 +33,7 @@ void keypadInit() {
 uint8_t getInput( void ) {
     uint8_t i, j;
     int input;
-    
+
     // Check for any keys pressed. Then quit if none
     AT91F_PIO_ClearOutput(AT91C_BASE_PIOA, K_COLUMNS);
     if (((input = AT91F_PIO_GetInput(AT91C_BASE_PIOA)) & K_ROWS) == K_ROWS) {
@@ -48,7 +48,7 @@ uint8_t getInput( void ) {
         input = AT91F_PIO_GetInput(AT91C_BASE_PIOA);
         for (j = 0; j <= 3; j++) {
             if ((input & K_ROWS_ARRAY[j]) == 0) {
-              return keypadButtons[j][i];
+                return keypadButtons[j][i];
             }
         }
     }
@@ -56,27 +56,27 @@ uint8_t getInput( void ) {
 }
 
 uint8_t getCleanInput( void ) {
-    uint8_t returnVal = getInput();
-    int8_t returnState = FALSE;
+    uint8_t returnVal;
+
     //First get a result that ignores the button bounce
-    if (buttonPress == returnVal) {
-        if (buttonPressCount > BUTTON_BOUNCE_DELAY ) {
-            buttonPressCount = 0;
-            returnState = TRUE;
+    if (buttonPressCount > BUTTON_BOUNCE_DELAY ) {
+        if (buttonPress == (returnVal = getInput())) {
+            // Then return the button only if it's not the same as the last one
+            if (returnVal != lastReturn) {
+                lastReturn = returnVal;
+                return returnVal;
+            }
         }
         else {
-            buttonPressCount++;
+            buttonPress = returnVal;
         }
+        buttonPressCount = 0;
     }
     else {
-        buttonPress = returnVal;
-    }
-
-    // Then return the button only if it's not the same as the last one
-    if (returnState == TRUE && returnVal != lastReturn) {
-        lastReturn = returnVal;
-        return returnVal;
+        buttonPressCount++;
     }
     return NULL_BUTTON;
+
+
 }
 
