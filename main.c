@@ -32,7 +32,7 @@ int main(void)
     setRedLed(ON);
 
     for(;;) {
-        if ((result = getCleanInput()) < 0x0C) {
+        if ((result = getCleanInput()) <= 0x0F) {
             switch (result) {
                 case 0xA:  // Stop
                     stopMusic();
@@ -49,7 +49,7 @@ int main(void)
                     break;
                 default: 
                     setPlay(result);
-                    setMusic(songs[result-1].notes, songs[result-1].speed);
+                    setMusic(songs[result-1]->notes, songs[result-1]->speed);
                     playingSong = result;
                     break;
             }
