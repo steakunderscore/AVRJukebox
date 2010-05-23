@@ -19,15 +19,31 @@
 // Note defines as number of microseconds per period.
 // Note, these are actually 3 octaves above there
 // listed values.
-#define C3 955
-#define D3 851
-#define E3 758
-#define F3 716
-#define G3 638
-#define C4 478
-#define D4 426
-#define E4 379
-#define G4 319
+#define C3 1911
+#define D3 1703
+#define E3 1517
+#define F3 1432
+#define G3 1276
+#define C4 955
+#define D4 851
+#define E4 758
+#define F4 716
+#define F4S 676
+#define G4 638
+#define G4S 602
+#define A4 568
+#define B4 506
+#define C5 478
+#define D5 426
+#define E5 379
+#define F5 358
+#define G5 319
+#define A5 284
+#define B5 253
+#define C6 239
+#define D6 213
+#define E6 190
+#define F6 179
 
 typedef struct note {
     // The period of the note to play in microseconds, generally use the defines
@@ -36,6 +52,10 @@ typedef struct note {
     // The length of the note in number of quavers.
     uint8_t length;
 } note_t;
+
+void stopMusic( void );
+void resetMusic( void );
+void startMusic( void );
 
 /* Sets the music to be played to the given music with a given quaverlength. */
 void setMusic( note_t *music_p, uint32_t quaverLength );
