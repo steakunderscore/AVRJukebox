@@ -53,6 +53,11 @@ typedef struct note {
     uint8_t length;
 } note_t;
 
+typedef struct song {
+    uint32_t speed;
+    note_t *notes;
+} song_t;
+
 void stopMusic( void );
 void resetMusic( void );
 void startMusic( void );
