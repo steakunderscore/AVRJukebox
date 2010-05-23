@@ -66,6 +66,9 @@ void resetMusic( void ) {
 
 void playMusic( void ) {
     uint32_t status;
+    uint8_t value = 0;
+    static uint8_t oldValue = 0;
+
     if (!playingMusic) {
         return;
     }
@@ -84,7 +87,11 @@ void playMusic( void ) {
         sendData(128);
         return;
     }
-    sendData(getNotesAmplitude(&music[currentNote], currentTicks + quaverTicks * currentQuaver));
+    value = getNotesAmplitude(&music[currentNote], currentTicks + quaverTicks * currentQuaver);
+    if (value != oldValue) {
+        sendData(value);
+        oldValue = value;
+    }
 }
 
 void musicInit( void ) {
