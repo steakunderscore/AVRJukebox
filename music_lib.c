@@ -9,10 +9,31 @@
  */
 
 #include "music.h"
+#include <stdlib.h>
 
-note_t sineSolo[] = {{C4,6},{0,0}};
+note_t sineSolo[] = {{D5,6},{0,0}};
+song_t sine = {7000000, sineSolo};
 
-song_t sine = {200000, sineSolo};
+note_t sineSoloC3[] = {{C3,6},{0,0}};
+song_t sineC3 = {7000000, sineSoloC3};
+
+note_t sineSoloF3[] = {{F3,6},{0,0}};
+song_t sineF3 = {7000000, sineSoloF3};
+
+note_t sineSoloD4[] = {{D4,6},{0,0}};
+song_t sineD4 = {7000000, sineSoloD4};
+
+note_t sineSoloG4[] = {{G4,6},{0,0}};
+song_t sineG4 = {7000000, sineSoloG4};
+
+note_t sineSoloB4[] = {{B4,6},{0,0}};
+song_t sineB4 = {7000000, sineSoloB4};
+
+note_t sineSoloF5[] = {{F5,6},{0,0}};
+song_t sineF5 = {7000000, sineSoloF5};
+
+note_t sineSoloD6[] = {{D6,6},{0,0}};
+song_t sineD6 = {7000000, sineSoloD6};
 
 note_t maryHadALittleLambSolo[] = {
     {E4,2},
@@ -44,7 +65,7 @@ note_t maryHadALittleLambSolo[] = {
     {0,0}
 };
 
-song_t maryHadALittleLamb = {700000, maryHadALittleLambSolo};
+song_t maryHadALittleLamb = {8500000, maryHadALittleLambSolo};
 
 note_t theResistanceIntroSolo[] = {
     {E4,2},
@@ -119,7 +140,7 @@ note_t theResistanceIntroSolo[] = {
     {0,0}
 };
 
-song_t theResistanceIntro = {800000, theResistanceIntroSolo};
+song_t theResistanceIntro = {8000000, theResistanceIntroSolo};
 
 note_t happyBirthdaySolo[] = {
     {D4,1},
@@ -150,7 +171,7 @@ note_t happyBirthdaySolo[] = {
     {0,0}
 };
 
-song_t happyBirthday = {500000, happyBirthdaySolo};
+song_t happyBirthday = {10000000, happyBirthdaySolo};
 
 note_t pinkPantherSolo[] = {
     {D3S,3},
@@ -181,4 +202,4 @@ note_t pinkPantherSolo[] = {
 
 song_t pinkPanther = {3000000, pinkPantherSolo};
 
-song_t songs[] = {maryHadALittleLamb, theResistanceIntro, happyBirthday, pinkPanther, sine, sine, sine, sine, sine};
+song_t *songs[] = {&maryHadALittleLamb, &theResistanceIntro, &happyBirthday, &pinkPanther, &sine, &sine, &sineC3, &sineF3, &sineD4, NULL, NULL, &sineG4, &sineB4, &sineF5, &sineD6};
