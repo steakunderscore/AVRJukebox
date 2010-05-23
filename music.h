@@ -32,12 +32,14 @@
 #define B3 1012
 #define C4 955
 #define D4 851
+#define D4S 804
 #define E4 758
 #define F4 716
 #define F4S 676
 #define G4 638
 #define G4S 602
 #define A4 568
+#define B4B 536
 #define B4 506
 #define C5 478
 #define D5 426
