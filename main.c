@@ -44,7 +44,7 @@ int main(void)
                     startMusic();
                 }
                 default: {
-                    setMusic(songs[result], 7000000);
+                    setMusic(songs[result-1], 7000000);
                 }
             }
         }
