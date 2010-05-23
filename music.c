@@ -71,8 +71,8 @@ void playMusic( void ) {
     if (!playingMusic) {
         return;
     }
-    status = AT91F_PITGetPIVR(AT91C_BASE_PITC);
-    currentTicks += (status & AT91C_PITC_CPIV);
+    status = AT91F_PITGetPIVR(AT91C_BASE_PITC) & AT91C_PITC_CPIV;
+    currentTicks += status;
     if (currentTicks > quaverTicks) {
         currentQuaver++;
         currentTicks -= quaverTicks;
