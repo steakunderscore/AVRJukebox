@@ -60,5 +60,17 @@ void scrollDisplay( void );
 //*--------------------------------------------------------------------------------------
 void setDisplay(int displayNum, int value);
 
+//Clear the display of all chracters
+void clearDisplay( void );
+
+//Display an error message
+void setPlay( uint8_t );
+
+//Display an error message
+void setStop( void );
+
+//Display an error message
+void setPause( uint8_t );
+
 //Display an error message
 void setError(int errorNum);
