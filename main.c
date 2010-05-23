@@ -31,7 +31,7 @@ int main(void)
     setRedLed(ON);
 
     for(;;) {
-        if ((result = getInput()) < 0x0C) {
+        if ((result = getCleanInput()) < 0x0C) {
             switch (result) {
                 case 0xA: { // Stop
                     stopMusic();
