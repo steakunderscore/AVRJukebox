@@ -39,10 +39,10 @@
 void keypadInit( void );
 
 //*--------------------------------------------------------------------------------------
-//* Function Name       : getInput
-//* Object              : Get input from keypad.
+//* Function Name       : getCleanInput
+//* Object              : Get input from keypad with not duplicates or button bouce.
 //* Input Parameters    : none
 //* Output Parameters   : First found pressed button from 0x0 to 0xF. Or returns 0xFF for none
 //*--------------------------------------------------------------------------------------
-uint8_t getInput( void );
+uint8_t getCleanInput( void );
 #endif //input_h
