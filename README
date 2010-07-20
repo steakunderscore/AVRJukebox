@@ -5,3 +5,32 @@ All code is under GNU GPL
 
 
 A Jukebox based on the ENEL353 Assignment at University of Canterbury, New Zealand
+
+
+Taken from handout:
+This project requires the use of a small speaker driven by an audio amplifier and
+interfaced to a microprocessor. The microprocessor will store one of several
+“tunes”. On demand the embedded system will play a selected tune through a
+digital to analogue converter (DAC), pre-amplifier, amplifier and speaker. Each
+“tune” will be kept in a table in memory and a selection made from the keypad. A
+human-interface using a 7-Segment LED display will be required to prompt the
+user for a song. Waveform data can be generated using a spreadsheet program such
+as Excel, or a mathematical tool such as MATLAB. These data will be stored in
+memory and output to a digital-to-analogue converter for amplification, and
+ultimately heard by users as musical sequences. Monotone sequences are sufficient
+for this project, however polymorphic tones (use of harmonics) are encouraged.
+
+Bill of Materials
+Component Quantity
+AT91SAM7s256 MCU x1
+MAX550 DAC x1
+TL071 OP-AMP x1
+LM386 Audio Amplifier x1
+.2W loud Speaker x1
+4-Digit 7-Segment Display x1
+LED, Green x1
+LED, Red x1
+BC557 Transistor x6
+4x4 Keypad x1
+Various Resistors ∼ x20
+
